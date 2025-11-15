@@ -1,9 +1,12 @@
 import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Settings } from "lucide-react";
 
 const Index = () => {
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-muted/20 p-4">
@@ -21,9 +24,15 @@ const Index = () => {
             <p className="text-sm text-muted-foreground">User ID:</p>
             <p className="font-mono text-xs break-all">{user?.id}</p>
           </div>
-          <Button onClick={signOut} variant="outline" className="w-full">
-            Sign Out
-          </Button>
+          <div className="flex gap-2">
+            <Button onClick={() => navigate("/settings")} variant="outline" className="flex-1">
+              <Settings className="h-4 w-4 mr-2" />
+              Settings
+            </Button>
+            <Button onClick={signOut} variant="outline" className="flex-1">
+              Sign Out
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>

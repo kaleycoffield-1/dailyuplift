@@ -463,8 +463,11 @@ export type Database = {
           email: string
           id: string
           name: string | null
+          notification_evening_enabled: boolean | null
           notification_evening_time: string | null
+          notification_feelings_enabled: boolean | null
           notification_feelings_time: string | null
+          notification_morning_enabled: boolean | null
           notification_morning_time: string | null
         }
         Insert: {
@@ -472,8 +475,11 @@ export type Database = {
           email: string
           id: string
           name?: string | null
+          notification_evening_enabled?: boolean | null
           notification_evening_time?: string | null
+          notification_feelings_enabled?: boolean | null
           notification_feelings_time?: string | null
+          notification_morning_enabled?: boolean | null
           notification_morning_time?: string | null
         }
         Update: {
@@ -481,8 +487,11 @@ export type Database = {
           email?: string
           id?: string
           name?: string | null
+          notification_evening_enabled?: boolean | null
           notification_evening_time?: string | null
+          notification_feelings_enabled?: boolean | null
           notification_feelings_time?: string | null
+          notification_morning_enabled?: boolean | null
           notification_morning_time?: string | null
         }
         Relationships: []

@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -29,6 +30,9 @@ export default function Settings() {
   const [morningTime, setMorningTime] = useState("08:00");
   const [afternoonTime, setAfternoonTime] = useState("14:00");
   const [eveningTime, setEveningTime] = useState("20:00");
+  const [morningEnabled, setMorningEnabled] = useState(true);
+  const [afternoonEnabled, setAfternoonEnabled] = useState(true);
+  const [eveningEnabled, setEveningEnabled] = useState(true);
   const [savingTimes, setSavingTimes] = useState(false);
 
   useEffect(() => {
@@ -42,7 +46,7 @@ export default function Settings() {
     
     const { data, error } = await supabase
       .from("users")
-      .select("notification_morning_time, notification_feelings_time, notification_evening_time")
+      .select("notification_morning_time, notification_feelings_time, notification_evening_time, notification_morning_enabled, notification_feelings_enabled, notification_evening_enabled")
       .eq("id", user.id)
       .single();
 
@@ -55,6 +59,9 @@ export default function Settings() {
       if (data.notification_morning_time) setMorningTime(data.notification_morning_time);
       if (data.notification_feelings_time) setAfternoonTime(data.notification_feelings_time);
       if (data.notification_evening_time) setEveningTime(data.notification_evening_time);
+      setMorningEnabled(data.notification_morning_enabled ?? true);
+      setAfternoonEnabled(data.notification_feelings_enabled ?? true);
+      setEveningEnabled(data.notification_evening_enabled ?? true);
     }
   };
 
@@ -104,7 +111,10 @@ export default function Settings() {
         .update({
           notification_morning_time: morningTime,
           notification_feelings_time: afternoonTime,
-          notification_evening_time: eveningTime
+          notification_evening_time: eveningTime,
+          notification_morning_enabled: morningEnabled,
+          notification_feelings_enabled: afternoonEnabled,
+          notification_evening_enabled: eveningEnabled
         })
         .eq("id", user.id);
 
@@ -180,35 +190,74 @@ export default function Settings() {
             <CardDescription>Set when you'd like to receive daily reminders</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="morning-time">Morning Check-in</Label>
-              <Input
-                id="morning-time"
-                type="time"
-                value={morningTime}
-                onChange={(e) => setMorningTime(e.target.value)}
-              />
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="space-y-1">
+                  <Label htmlFor="morning-enabled">Morning Check-in</Label>
+                  <p className="text-sm text-muted-foreground">Daily morning reminder</p>
+                </div>
+                <Switch
+                  id="morning-enabled"
+                  checked={morningEnabled}
+                  onCheckedChange={setMorningEnabled}
+                />
+              </div>
+              {morningEnabled && (
+                <Input
+                  type="time"
+                  value={morningTime}
+                  onChange={(e) => setMorningTime(e.target.value)}
+                  className="ml-0"
+                />
+              )}
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="afternoon-time">Afternoon Feelings Check</Label>
-              <Input
-                id="afternoon-time"
-                type="time"
-                value={afternoonTime}
-                onChange={(e) => setAfternoonTime(e.target.value)}
-              />
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="space-y-1">
+                  <Label htmlFor="afternoon-enabled">Afternoon Feelings Check</Label>
+                  <p className="text-sm text-muted-foreground">Mid-day check-in</p>
+                </div>
+                <Switch
+                  id="afternoon-enabled"
+                  checked={afternoonEnabled}
+                  onCheckedChange={setAfternoonEnabled}
+                />
+              </div>
+              {afternoonEnabled && (
+                <Input
+                  type="time"
+                  value={afternoonTime}
+                  onChange={(e) => setAfternoonTime(e.target.value)}
+                  className="ml-0"
+                />
+              )}
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="evening-time">Evening Reflection</Label>
-              <Input
-                id="evening-time"
-                type="time"
-                value={eveningTime}
-                onChange={(e) => setEveningTime(e.target.value)}
-              />
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="space-y-1">
+                  <Label htmlFor="evening-enabled">Evening Reflection</Label>
+                  <p className="text-sm text-muted-foreground">End of day reflection</p>
+                </div>
+                <Switch
+                  id="evening-enabled"
+                  checked={eveningEnabled}
+                  onCheckedChange={setEveningEnabled}
+                />
+              </div>
+              {eveningEnabled && (
+                <Input
+                  type="time"
+                  value={eveningTime}
+                  onChange={(e) => setEveningTime(e.target.value)}
+                  className="ml-0"
+                />
+              )}
             </div>
-            <Button onClick={handleSaveNotificationTimes} disabled={savingTimes}>
-              {savingTimes ? "Saving..." : "Save Notification Times"}
+
+            <Button onClick={handleSaveNotificationTimes} disabled={savingTimes} className="w-full">
+              {savingTimes ? "Saving..." : "Save Notification Settings"}
             </Button>
           </CardContent>
         </Card>

@@ -19,6 +19,23 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        peach: {
+          50: "hsl(var(--peach-50))",
+          100: "hsl(var(--peach-100))",
+          200: "hsl(var(--peach-200))",
+          300: "hsl(var(--peach-300))",
+          400: "hsl(var(--peach-400))",
+          500: "hsl(var(--peach-500))",
+          600: "hsl(var(--peach-600))",
+          700: "hsl(var(--peach-700))",
+          800: "hsl(var(--peach-800))",
+        },
+        brown: {
+          600: "hsl(var(--brown-600))",
+          700: "hsl(var(--brown-700))",
+          800: "hsl(var(--brown-800))",
+          900: "hsl(var(--brown-900))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -56,6 +73,10 @@ export default {
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
+        },
+        gradient: {
+          start: "hsl(var(--gradient-start))",
+          end: "hsl(var(--gradient-end))",
         },
       },
       borderRadius: {

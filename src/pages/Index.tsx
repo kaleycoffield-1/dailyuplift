@@ -117,6 +117,9 @@ const Index = () => {
                 title={dailyWisdomTitle}
                 content={dailyWisdomContent}
               />
+              <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
+                TODAY'S AFFIRMATION
+              </p>
               <AffirmationCard text={affirmation} />
             </>
           )}
@@ -130,6 +133,9 @@ const Index = () => {
               </button>
 
               <div className="mt-8 space-y-4">
+                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
+                  TODAY'S AFFIRMATION
+                </p>
                 <AffirmationCard text={affirmation} />
                 <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
                   DAILY WISDOM

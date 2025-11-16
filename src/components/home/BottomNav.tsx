@@ -24,15 +24,14 @@ export const BottomNav = ({ active = "home", onNavigate }: BottomNavProps) => {
             <button
               key={item.id}
               onClick={() => onNavigate?.(item.id)}
-              className="flex flex-col items-center gap-1 relative"
+              className="flex flex-col items-center gap-1"
             >
-              {isActive && (
-                <div className="w-[72px] h-[72px] rounded-full bg-card border-2 border-primary flex flex-col items-center justify-center absolute -top-2 shadow-[0_4px_4px_0_hsl(var(--peach-400))] gap-0.5">
+              {isActive ? (
+                <div className="w-[72px] h-[72px] rounded-full bg-card border-2 border-primary flex flex-col items-center justify-center shadow-[0_4px_4px_0_hsl(var(--peach-400))] gap-0.5">
                   <Icon className="w-6 h-6 text-brown-900" />
                   <span className="text-sm text-brown-900">{item.label}</span>
                 </div>
-              )}
-              {!isActive && (
+              ) : (
                 <>
                   <Icon className="w-6 h-6 text-brown-900" />
                   <span className="text-sm text-brown-900">{item.label}</span>

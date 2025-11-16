@@ -34,7 +34,7 @@ export const DailyWisdomCard = ({ title, content, onDeeper, onBookmark }: DailyW
       {/* Footer */}
       <button 
         onClick={onDeeper}
-        className="text-sm font-semibold text-brown-900 hover:underline"
+        className="text-sm font-semibold text-brown-900 hover:underline w-full text-center"
       >
         Go deeper
       </button>

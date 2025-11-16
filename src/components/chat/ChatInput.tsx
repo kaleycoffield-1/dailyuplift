@@ -35,8 +35,8 @@ export const ChatInput = ({ onSendMessage }: ChatInputProps) => {
   }, [message]);
 
   return (
-    <div className="fixed bottom-[104px] left-0 right-0 px-4 pb-4 bg-background">
-      <div className="relative bg-card rounded-2xl p-4 border-2 border-border max-w-md mx-auto">
+    <div className="fixed bottom-[104px] left-0 right-0 px-4 pb-4 bg-background flex justify-center">
+      <div className="relative bg-card rounded-2xl p-4 border-2 border-border w-full max-w-[480px] min-w-[320px]">
         <textarea
           ref={textareaRef}
           value={message}

@@ -79,49 +79,59 @@ const Index = () => {
                 Begin morning check-in
               </button>
 
-              <div className="mt-8 space-y-4">
-                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
+              <div className="mt-8 space-y-10">
+                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
                   DAILY WISDOM
                 </p>
                 <DailyWisdomCard 
                   title={dailyWisdomTitle}
                   content={dailyWisdomContent}
                 />
-                <FeelingsCheckCard 
-                  feeling={currentFeeling}
-                  timestamp={getCurrentTime()}
-                />
-                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
-                  LIFT YOUR VIBE EXERCISE
-                </p>
-                <RadialAppreciationCard isCompleted={false} />
+                <div>
+                  <FeelingsCheckCard 
+                    feeling={currentFeeling}
+                    timestamp={getCurrentTime()}
+                  />
+                </div>
+                <div>
+                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                    LIFT YOUR VIBE EXERCISE
+                  </p>
+                  <RadialAppreciationCard isCompleted={false} />
+                </div>
               </div>
             </>
           )}
 
           {/* MIDDAY STATE */}
           {timeOfDay === "midday" && (
-            <>
+            <div className="space-y-10">
               <FeelingsCheckCard 
                 feeling={currentFeeling}
                 timestamp={getCurrentTime()}
               />
-              <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
-                LIFT YOUR VIBE EXERCISE
-              </p>
-              <RadialAppreciationCard isCompleted={true} />
-              <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
-                DAILY WISDOM
-              </p>
-              <DailyWisdomCard 
-                title={dailyWisdomTitle}
-                content={dailyWisdomContent}
-              />
-              <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
-                TODAY'S AFFIRMATION
-              </p>
-              <AffirmationCard text={affirmation} />
-            </>
+              <div>
+                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                  LIFT YOUR VIBE EXERCISE
+                </p>
+                <RadialAppreciationCard isCompleted={true} />
+              </div>
+              <div>
+                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                  DAILY WISDOM
+                </p>
+                <DailyWisdomCard 
+                  title={dailyWisdomTitle}
+                  content={dailyWisdomContent}
+                />
+              </div>
+              <div>
+                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                  TODAY'S AFFIRMATION
+                </p>
+                <AffirmationCard text={affirmation} />
+              </div>
+            </div>
           )}
 
           {/* EVENING STATE */}
@@ -132,22 +142,28 @@ const Index = () => {
                 Begin evening reflection
               </button>
 
-              <div className="mt-8 space-y-4">
-                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
-                  TODAY'S AFFIRMATION
-                </p>
-                <AffirmationCard text={affirmation} />
-                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
-                  DAILY WISDOM
-                </p>
-                <DailyWisdomCard 
-                  title={dailyWisdomTitle}
-                  content={dailyWisdomContent}
-                />
-                <FeelingsCheckCard 
-                  feeling={currentFeeling}
-                  timestamp={getCurrentTime()}
-                />
+              <div className="mt-8 space-y-10">
+                <div>
+                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                    TODAY'S AFFIRMATION
+                  </p>
+                  <AffirmationCard text={affirmation} />
+                </div>
+                <div>
+                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                    DAILY WISDOM
+                  </p>
+                  <DailyWisdomCard 
+                    title={dailyWisdomTitle}
+                    content={dailyWisdomContent}
+                  />
+                </div>
+                <div>
+                  <FeelingsCheckCard 
+                    feeling={currentFeeling}
+                    timestamp={getCurrentTime()}
+                  />
+                </div>
               </div>
             </>
           )}

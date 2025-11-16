@@ -80,6 +80,9 @@ const Index = () => {
               </button>
 
               <div className="mt-8 space-y-4">
+                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
+                  DAILY WISDOM
+                </p>
                 <DailyWisdomCard 
                   title={dailyWisdomTitle}
                   content={dailyWisdomContent}
@@ -101,6 +104,9 @@ const Index = () => {
                 timestamp={getCurrentTime()}
               />
               <RadialAppreciationCard isCompleted={true} />
+              <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
+                DAILY WISDOM
+              </p>
               <DailyWisdomCard 
                 title={dailyWisdomTitle}
                 content={dailyWisdomContent}
@@ -119,6 +125,9 @@ const Index = () => {
 
               <div className="mt-8 space-y-4">
                 <AffirmationCard text={affirmation} />
+                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
+                  DAILY WISDOM
+                </p>
                 <DailyWisdomCard 
                   title={dailyWisdomTitle}
                   content={dailyWisdomContent}

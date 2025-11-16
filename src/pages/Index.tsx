@@ -91,6 +91,9 @@ const Index = () => {
                   feeling={currentFeeling}
                   timestamp={getCurrentTime()}
                 />
+                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
+                  LIFT YOUR VIBE EXERCISE
+                </p>
                 <RadialAppreciationCard isCompleted={false} />
               </div>
             </>
@@ -103,6 +106,9 @@ const Index = () => {
                 feeling={currentFeeling}
                 timestamp={getCurrentTime()}
               />
+              <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
+                LIFT YOUR VIBE EXERCISE
+              </p>
               <RadialAppreciationCard isCompleted={true} />
               <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-2">
                 DAILY WISDOM

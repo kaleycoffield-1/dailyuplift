@@ -9,7 +9,7 @@ interface DailyWisdomCardProps {
 
 export const DailyWisdomCard = ({ title, content, onDeeper, onBookmark }: DailyWisdomCardProps) => {
   return (
-    <div className="bg-peach-300 rounded-[20px] p-6 relative min-h-[200px]">
+    <div className="bg-peach-300 rounded-[20px] p-6 relative min-h-[200px] border-2 border-border">
       {/* Header with Title and Bookmark */}
       <div className="flex items-start justify-between mb-3">
         <h2 className="text-xs font-normal uppercase tracking-wide text-brown-700">

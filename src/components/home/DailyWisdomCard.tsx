@@ -10,8 +10,11 @@ interface DailyWisdomCardProps {
 export const DailyWisdomCard = ({ title, content, onDeeper, onBookmark }: DailyWisdomCardProps) => {
   return (
     <div className="bg-peach-300 rounded-[20px] p-6 relative min-h-[200px]">
-      {/* Header */}
-      <div className="flex items-start justify-end mb-3">
+      {/* Header with Title and Bookmark */}
+      <div className="flex items-start justify-between mb-3">
+        <h2 className="text-xs font-normal uppercase tracking-wide text-brown-700">
+          {title}
+        </h2>
         <button 
           onClick={onBookmark}
           className="text-brown-900 hover:scale-110 transition-transform"
@@ -20,11 +23,6 @@ export const DailyWisdomCard = ({ title, content, onDeeper, onBookmark }: DailyW
           <Bookmark className="w-5 h-5" />
         </button>
       </div>
-
-      {/* Title */}
-      <h2 className="text-xs font-normal uppercase tracking-wide text-brown-700 mb-3">
-        {title}
-      </h2>
       
       {/* Body */}
       <p className="text-sm text-brown-900 leading-relaxed mb-4">

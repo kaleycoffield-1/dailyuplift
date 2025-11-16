@@ -88,6 +88,9 @@ const Index = () => {
                   content={dailyWisdomContent}
                 />
                 <div>
+                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                    FEELINGS CHECK
+                  </p>
                   <FeelingsCheckCard 
                     feeling={currentFeeling}
                     timestamp={getCurrentTime()}
@@ -106,10 +109,15 @@ const Index = () => {
           {/* MIDDAY STATE */}
           {timeOfDay === "midday" && (
             <div className="space-y-10">
-              <FeelingsCheckCard 
-                feeling={currentFeeling}
-                timestamp={getCurrentTime()}
-              />
+              <div>
+                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                  FEELINGS CHECK
+                </p>
+                <FeelingsCheckCard 
+                  feeling={currentFeeling}
+                  timestamp={getCurrentTime()}
+                />
+              </div>
               <div>
                 <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
                   LIFT YOUR VIBE EXERCISE
@@ -159,6 +167,9 @@ const Index = () => {
                   />
                 </div>
                 <div>
+                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                    FEELINGS CHECK
+                  </p>
                   <FeelingsCheckCard 
                     feeling={currentFeeling}
                     timestamp={getCurrentTime()}

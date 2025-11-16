@@ -11,10 +11,7 @@ export const DailyWisdomCard = ({ title, content, onDeeper, onBookmark }: DailyW
   return (
     <div className="bg-peach-300 rounded-[20px] p-6 relative min-h-[200px]">
       {/* Header */}
-      <div className="flex items-start justify-between mb-3">
-        <p className="text-xs font-normal uppercase tracking-wide text-brown-700">
-          DAILY WISDOM
-        </p>
+      <div className="flex items-start justify-end mb-3">
         <button 
           onClick={onBookmark}
           className="text-brown-900 hover:scale-110 transition-transform"

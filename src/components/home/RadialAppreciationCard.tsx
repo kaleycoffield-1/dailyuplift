@@ -12,7 +12,7 @@ export const RadialAppreciationCard = ({
   onBookmark 
 }: RadialAppreciationCardProps) => {
   return (
-    <div className="bg-peach-300 rounded-[20px] p-6 relative">
+    <div className="bg-peach-300 rounded-[20px] p-6 relative border-2 border-border">
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <p className="text-xs font-normal uppercase tracking-wide text-brown-700">

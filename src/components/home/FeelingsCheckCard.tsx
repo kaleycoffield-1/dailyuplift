@@ -10,7 +10,7 @@ interface FeelingsCheckCardProps {
 export const FeelingsCheckCard = ({ feeling, timestamp, onClick }: FeelingsCheckCardProps) => {
   return (
     <div 
-      className="bg-peach-300 rounded-[20px] p-5 cursor-pointer hover:scale-[1.02] transition-transform"
+      className="bg-peach-300 rounded-[20px] p-5 cursor-pointer hover:scale-[1.02] transition-transform border-2 border-border"
       onClick={onClick}
     >
       <div className="flex items-start justify-between mb-4">

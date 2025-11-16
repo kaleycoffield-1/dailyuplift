@@ -1,28 +1,21 @@
 import { ThumbsUp, Check, Bookmark } from "lucide-react";
-
 interface RadialAppreciationCardProps {
   isCompleted?: boolean;
   onAction?: () => void;
   onBookmark?: () => void;
 }
-
-export const RadialAppreciationCard = ({ 
-  isCompleted = false, 
-  onAction, 
-  onBookmark 
+export const RadialAppreciationCard = ({
+  isCompleted = false,
+  onAction,
+  onBookmark
 }: RadialAppreciationCardProps) => {
-  return (
-    <div className="bg-peach-300 rounded-[20px] p-6 relative border-2 border-border">
+  return <div className="bg-peach-300 rounded-[20px] p-6 relative border-2 border-border">
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <p className="text-xs font-normal uppercase tracking-wide text-brown-700">
           RADIAL APPRECIATION
         </p>
-        <button 
-          onClick={onBookmark}
-          className="text-brown-900 hover:scale-110 transition-transform"
-          aria-label="Bookmark"
-        >
+        <button onClick={onBookmark} className="text-brown-900 hover:scale-110 transition-transform" aria-label="Bookmark">
           <Bookmark className="w-5 h-5" />
         </button>
       </div>
@@ -33,25 +26,13 @@ export const RadialAppreciationCard = ({
       </p>
 
       {/* Icon */}
-      <div className="flex justify-center mb-6">
-        {isCompleted ? (
-          <div className="w-16 h-16 rounded-full border-4 border-primary flex items-center justify-center">
-            <Check className="w-8 h-8 text-primary" />
-          </div>
-        ) : (
-          <ThumbsUp className="w-8 h-8 text-primary" />
-        )}
-      </div>
+      
 
       {/* Button */}
       <div className="text-center">
-        <button 
-          onClick={onAction}
-          className="text-sm font-semibold text-brown-900 hover:underline"
-        >
+        <button onClick={onAction} className="text-sm font-semibold text-brown-900 hover:underline">
           {isCompleted ? "View" : "Try it out"}
         </button>
       </div>
-    </div>
-  );
+    </div>;
 };

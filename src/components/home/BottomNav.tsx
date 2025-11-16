@@ -27,7 +27,7 @@ export const BottomNav = ({ active = "home", onNavigate }: BottomNavProps) => {
               className="flex flex-col items-center gap-1 relative"
             >
               {isActive && (
-                <div className="w-[72px] h-[72px] rounded-full bg-primary flex items-center justify-center absolute -top-2">
+                <div className="w-[72px] h-[72px] rounded-full bg-card border-2 border-primary flex items-center justify-center absolute -top-2 shadow-[0_4px_4px_0_hsl(var(--peach-400))]">
                   <Icon className="w-6 h-6 text-brown-900" />
                 </div>
               )}

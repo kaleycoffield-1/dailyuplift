@@ -50,9 +50,9 @@ export const ChatInput = ({ onSendMessage }: ChatInputProps) => {
         <button
           onClick={handleSend}
           disabled={!message.trim()}
-          className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-primary flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="absolute bottom-4 right-4 w-8 h-8 rounded-full bg-primary flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <ArrowUp className="w-4 h-4 text-brown-900" />
+          <ArrowUp className="w-3.5 h-3.5 text-brown-900" />
         </button>
       </div>
     </div>

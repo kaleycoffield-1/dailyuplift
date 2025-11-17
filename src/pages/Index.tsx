@@ -84,13 +84,15 @@ const Index = () => {
               </div>
 
               <div className="mt-20 space-y-10">
-                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
-                  DAILY WISDOM
-                </p>
-                <DailyWisdomCard 
-                  title={dailyWisdomTitle}
-                  content={dailyWisdomContent}
-                />
+                <div>
+                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-1">
+                    DAILY WISDOM
+                  </p>
+                  <DailyWisdomCard 
+                    title={dailyWisdomTitle}
+                    content={dailyWisdomContent}
+                  />
+                </div>
                 <div>
                   <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
                     FEELINGS CHECK

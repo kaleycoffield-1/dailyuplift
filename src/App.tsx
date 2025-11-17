@@ -46,7 +46,7 @@ const App = () => (
                 } />
                 <Route path="/chat/rewire" element={
                   <ProtectedRoute>
-                    <RewireHistory />
+                    <RewireNew />
                   </ProtectedRoute>
                 } />
                 <Route path="/chat/rewire/new" element={

@@ -6,10 +6,10 @@ interface ChatTabsProps {
 export const ChatTabs = ({ activeTab, onTabChange }: ChatTabsProps) => {
   return (
     <div className="px-4 py-3 bg-background flex justify-center">
-      <div className="flex gap-8 w-full max-w-[480px] min-w-[320px]">
+      <div className="flex w-full max-w-[480px] min-w-[320px]">
         <button
           onClick={() => onTabChange("daily")}
-          className="relative pb-2"
+          className="relative pb-2 flex-1 text-center"
         >
           <span
             className={`${
@@ -27,7 +27,7 @@ export const ChatTabs = ({ activeTab, onTabChange }: ChatTabsProps) => {
         
         <button
           onClick={() => onTabChange("rewire")}
-          className="relative pb-2"
+          className="relative pb-2 flex-1 text-center"
         >
           <span
             className={`${

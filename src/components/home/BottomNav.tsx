@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import homeIcon from "@/assets/icons/home.svg";
+import homeIcon from "@/assets/icons/vision.svg";
 import chatIcon from "@/assets/icons/chat.svg";
 import goalIcon from "@/assets/icons/goal.svg";
-import visionIcon from "@/assets/icons/vision.svg";
+import visionIcon from "@/assets/icons/home.svg";
 
 interface BottomNavProps {
   active?: "home" | "chat" | "goals" | "vision";

@@ -4,27 +4,21 @@ import { ChatTabs } from "@/components/chat/ChatTabs";
 import { BottomNav } from "@/components/home/BottomNav";
 import { ConversationListItem } from "@/components/chat/ConversationListItem";
 
-// Mock data for Phase 1
-const mockConversations = [
-  {
-    id: '1',
-    title: 'Rethinking my relationship to money...',
-    updated_at: '2025-11-18T10:30:00Z'
-  },
-  {
-    id: '2', 
-    title: 'Reframing anger at my parents...',
-    updated_at: '2025-11-17T14:20:00Z'
-  },
-  {
-    id: '3',
-    title: 'On my baby being fussy...',
-    updated_at: '2025-11-16T09:15:00Z'
-  }
-];
+// Mock data for Phase 1 - empty by default for first-time users
+const mockConversations: Array<{
+  id: string;
+  title: string;
+  updated_at: string;
+}> = [];
 
 export const RewireHistory = () => {
   const navigate = useNavigate();
+
+  // If no conversations exist, redirect to new conversation view
+  if (mockConversations.length === 0) {
+    navigate('/chat/rewire/new', { replace: true });
+    return null;
+  }
 
   const handleConversationClick = (id: string) => {
     navigate(`/chat/rewire/${id}`);

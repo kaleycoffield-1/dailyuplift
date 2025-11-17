@@ -9,7 +9,7 @@ export const RadialAppreciationCard = ({
   onAction,
   onBookmark
 }: RadialAppreciationCardProps) => {
-  return <div className="bg-peach-300 rounded-[20px] p-6 relative min-h-[300px] border-2 border-border">
+  return <div className="bg-peach-300 rounded-[20px] p-6 relative min-h-[300px] border-2 border-border flex flex-col">
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <p className="text-xs font-normal uppercase tracking-wide text-brown-700">
@@ -21,7 +21,7 @@ export const RadialAppreciationCard = ({
       </div>
 
       {/* Body */}
-      <p className="text-sm text-brown-900 leading-relaxed mb-6">
+      <p className="text-sm text-brown-900 leading-relaxed mb-6 flex-1">
         Spend a few minutes radically appreciating what's around you. It's sure to get the good vibes flowing!
       </p>
 

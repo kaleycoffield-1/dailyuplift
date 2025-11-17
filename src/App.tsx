@@ -10,6 +10,9 @@ import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import Settings from "./pages/Settings";
 import Chat from "./pages/Chat";
+import { RewireNew } from "./pages/chat/RewireNew";
+import { RewireHistory } from "./pages/chat/RewireHistory";
+import { RewireConversation } from "./pages/chat/RewireConversation";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +42,21 @@ const App = () => (
                 <Route path="/chat" element={
                   <ProtectedRoute>
                     <Chat />
+                  </ProtectedRoute>
+                } />
+                <Route path="/chat/rewire" element={
+                  <ProtectedRoute>
+                    <RewireHistory />
+                  </ProtectedRoute>
+                } />
+                <Route path="/chat/rewire/new" element={
+                  <ProtectedRoute>
+                    <RewireNew />
+                  </ProtectedRoute>
+                } />
+                <Route path="/chat/rewire/:id" element={
+                  <ProtectedRoute>
+                    <RewireConversation />
                   </ProtectedRoute>
                 } />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

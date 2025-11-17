@@ -154,7 +154,7 @@ const Index = () => {
           {/* EVENING STATE */}
           {timeOfDay === "evening" && (
             <>
-              <div className="mt-10">
+              <div className="mt-10 mb-20">
                 {/* Greeting */}
                 <h1 className="text-2xl text-brown-900 text-center mb-6">
                   {getGreeting()}

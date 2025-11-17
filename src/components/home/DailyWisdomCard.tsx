@@ -25,7 +25,7 @@ export const DailyWisdomCard = ({ title, content, onDeeper, onBookmark }: DailyW
       </div>
       
       {/* Body */}
-      <p className="text-sm text-brown-900 leading-relaxed mb-4 flex-1">
+      <p className="text-base text-brown-900 leading-relaxed mb-4 flex-1">
         {content}
       </p>
       

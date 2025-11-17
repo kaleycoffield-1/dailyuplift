@@ -29,28 +29,27 @@ export const RewireHistory = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-[104px]">
-      {/* Header */}
-      <div className="fixed top-0 left-0 right-0 bg-background z-10 border-b border-border">
-        <div className="flex items-center justify-between px-4 py-4">
-          <button className="p-2">
-            <Menu className="w-6 h-6 text-brown-900" />
-          </button>
-          <button className="p-2">
-            <User className="w-6 h-6 text-brown-900" />
-          </button>
-        </div>
-        
-        <ChatTabs 
-          activeTab="rewire" 
-          onTabChange={(tab) => {
-            if (tab === "daily") navigate("/chat");
-          }}
-        />
-      </div>
+    <div className="min-h-screen bg-background pb-[104px] flex flex-col">
+      {/* Header Bar */}
+      <header className="h-14 px-4 flex items-center justify-between bg-background">
+        <button className="p-2 hover:scale-110 transition-transform">
+          <Menu className="w-6 h-6 text-brown-900" />
+        </button>
+        <button className="p-2 hover:scale-110 transition-transform">
+          <User className="w-6 h-6 text-brown-900" />
+        </button>
+      </header>
+
+      {/* Tab Navigation */}
+      <ChatTabs 
+        activeTab="rewire" 
+        onTabChange={(tab) => {
+          if (tab === "daily") navigate("/chat");
+        }}
+      />
 
       {/* Conversation List */}
-      <div className="pt-[120px] px-4">
+      <div className="flex-1 overflow-y-auto px-4 py-4">
         {mockConversations.map((conversation) => (
           <ConversationListItem
             key={conversation.id}
@@ -70,7 +69,7 @@ export const RewireHistory = () => {
       </button>
 
       {/* Bottom Navigation */}
-      <BottomNav />
+      <BottomNav active="chat" />
     </div>
   );
 };

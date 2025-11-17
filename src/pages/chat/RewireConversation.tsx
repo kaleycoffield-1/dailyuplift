@@ -105,35 +105,34 @@ export const RewireConversation = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-[104px]">
-      {/* Header */}
-      <div className="fixed top-0 left-0 right-0 bg-background z-10 border-b border-border">
-        <div className="flex items-center justify-between px-4 py-4">
-          <button onClick={handleBack} className="p-2">
-            <ChevronLeft className="w-6 h-6 text-brown-900" />
-          </button>
-          <button className="p-2">
-            <User className="w-6 h-6 text-brown-900" />
-          </button>
-        </div>
-        
-        <ChatTabs 
-          activeTab="rewire" 
-          onTabChange={(tab) => {
-            if (tab === "daily") navigate("/chat");
-          }}
-        />
-        
-        {/* Conversation Title */}
-        <div className="px-4 py-3 border-t border-border">
-          <h2 className="text-lg font-semibold text-brown-900 truncate">
-            {title}
-          </h2>
-        </div>
+    <div className="min-h-screen bg-background pb-[104px] flex flex-col">
+      {/* Header Bar */}
+      <header className="h-14 px-4 flex items-center justify-between bg-background">
+        <button onClick={handleBack} className="p-2 hover:scale-110 transition-transform">
+          <ChevronLeft className="w-6 h-6 text-brown-900" />
+        </button>
+        <button className="p-2 hover:scale-110 transition-transform">
+          <User className="w-6 h-6 text-brown-900" />
+        </button>
+      </header>
+
+      {/* Tab Navigation */}
+      <ChatTabs 
+        activeTab="rewire" 
+        onTabChange={(tab) => {
+          if (tab === "daily") navigate("/chat");
+        }}
+      />
+      
+      {/* Conversation Title */}
+      <div className="px-4 py-3 bg-background border-b border-border">
+        <h2 className="text-lg font-semibold text-brown-900 truncate">
+          {title}
+        </h2>
       </div>
 
-      {/* Messages */}
-      <div className="pt-[180px] px-4 pb-4">
+      {/* Chat Container */}
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6">
         {messages.map((message) => (
           <MessageBubble
             key={message.id}
@@ -147,7 +146,7 @@ export const RewireConversation = () => {
           <div className="mb-5">
             <div className="flex items-center gap-2 mb-2">
               <div className="w-2 h-2 rounded-full bg-primary"></div>
-              <span className="text-xs font-normal text-primary uppercase">Uplift</span>
+              <span className="text-xs font-normal text-primary uppercase">UPLIFT</span>
             </div>
             <p className="text-sm text-brown-600 italic">Thinking...</p>
           </div>
@@ -156,11 +155,11 @@ export const RewireConversation = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Chat Input */}
+      {/* Message Input */}
       <ChatInput onSendMessage={handleSendMessage} />
 
       {/* Bottom Navigation */}
-      <BottomNav />
+      <BottomNav active="chat" />
     </div>
   );
 };

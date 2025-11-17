@@ -47,8 +47,8 @@ All colors MUST be HSL.
     --ring: 28 100% 64%;
     
     /* Gradient colors */
-    --gradient-start: 28 100% 50%; /* #FF6C00 */
-    --gradient-end: 45 100% 51%; /* #FFC107 */
+    --gradient-start: 45 100% 51%; /* #FFC107 */
+    --gradient-end: 28 100% 50%; /* #FF6C00 */
     
     --radius: 0.5rem;
     --sidebar-background: 28 100% 99%;

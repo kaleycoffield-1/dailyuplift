@@ -43,7 +43,7 @@ export const ChatInput = ({ onSendMessage }: ChatInputProps) => {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Type your intention, desire, or manifestation"
-          className="w-full min-h-[120px] bg-transparent text-sm text-brown-900 placeholder:text-brown-600 placeholder:italic resize-none outline-none pr-14"
+          className="w-full min-h-[120px] bg-transparent text-sm text-brown-900 placeholder:text-brown-600/60 placeholder:italic resize-none outline-none pr-14"
           style={{ height: "120px" }}
         />
         

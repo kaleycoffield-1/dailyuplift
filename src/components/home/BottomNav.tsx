@@ -38,9 +38,11 @@ export const BottomNav = ({ active = "home", onNavigate }: BottomNavProps) => {
               className="flex flex-col items-center gap-1"
             >
               {isActive ? (
-                <div className="w-[72px] h-[72px] rounded-full bg-card border-2 border-primary flex flex-col items-center justify-center shadow-[0_4px_4px_0_hsl(var(--peach-400))] gap-0.5">
-                  <Icon className="w-6 h-6 text-brown-900" />
-                  <span className="text-sm text-brown-900">{item.label}</span>
+                <div className="relative w-[72px] h-[72px] rounded-full bg-gradient-to-r from-[#FF6C00] to-[#FFC107] p-[2px] shadow-[0_4px_4px_0_hsl(var(--peach-400))]">
+                  <div className="w-full h-full rounded-full bg-card flex flex-col items-center justify-center gap-0.5">
+                    <Icon className="w-6 h-6 text-brown-900" />
+                    <span className="text-sm text-brown-900">{item.label}</span>
+                  </div>
                 </div>
               ) : (
                 <>

@@ -1,5 +1,8 @@
-import { Home, MessageCircle, Target, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import homeIcon from "@/assets/icons/home.svg";
+import chatIcon from "@/assets/icons/chat.svg";
+import goalIcon from "@/assets/icons/goal.svg";
+import visionIcon from "@/assets/icons/vision.svg";
 
 interface BottomNavProps {
   active?: "home" | "chat" | "goals" | "vision";
@@ -10,10 +13,10 @@ export const BottomNav = ({ active = "home", onNavigate }: BottomNavProps) => {
   const navigate = useNavigate();
   
   const navItems = [
-    { id: "home", label: "Home", icon: Home, path: "/" },
-    { id: "chat", label: "Chat", icon: MessageCircle, path: "/chat" },
-    { id: "goals", label: "Goals", icon: Target, path: "/goals" },
-    { id: "vision", label: "Vision", icon: Sparkles, path: "/vision" },
+    { id: "home", label: "Home", icon: homeIcon, path: "/" },
+    { id: "chat", label: "Chat", icon: chatIcon, path: "/chat" },
+    { id: "goals", label: "Goals", icon: goalIcon, path: "/goals" },
+    { id: "vision", label: "Vision", icon: visionIcon, path: "/vision" },
   ];
 
   const handleClick = (item: typeof navItems[0]) => {
@@ -28,7 +31,6 @@ export const BottomNav = ({ active = "home", onNavigate }: BottomNavProps) => {
     <nav className="fixed bottom-0 left-0 right-0 h-[104px] bg-background px-6 pt-4 pb-6 border-t border-transparent shadow-[0_-4px_8px_0_hsl(28_100%_86%_/_0.25)] flex justify-center">
       <div className="flex items-center justify-around w-full max-w-[480px] min-w-[320px]">
         {navItems.map((item) => {
-          const Icon = item.icon;
           const isActive = active === item.id;
           
           return (
@@ -40,13 +42,13 @@ export const BottomNav = ({ active = "home", onNavigate }: BottomNavProps) => {
               {isActive ? (
                 <div className="relative w-[72px] h-[72px] rounded-full bg-gradient-to-r from-[#FF6C00] to-[#FFC107] p-[2px] shadow-[0_4px_4px_0_hsl(var(--peach-400))]">
                   <div className="w-full h-full rounded-full bg-card flex flex-col items-center justify-center gap-0.5">
-                    <Icon className="w-6 h-6 text-brown-900" />
+                    <img src={item.icon} alt={item.label} className="w-6 h-6" />
                     <span className="text-sm text-brown-900">{item.label}</span>
                   </div>
                 </div>
               ) : (
                 <>
-                  <Icon className="w-6 h-6 text-brown-900" />
+                  <img src={item.icon} alt={item.label} className="w-6 h-6" />
                   <span className="text-sm text-brown-900">{item.label}</span>
                 </>
               )}

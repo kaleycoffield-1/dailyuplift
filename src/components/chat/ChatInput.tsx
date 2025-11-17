@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
@@ -52,7 +52,7 @@ export const ChatInput = ({ onSendMessage }: ChatInputProps) => {
           disabled={!message.trim()}
           className="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-primary flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Send className="w-5 h-5 text-brown-900" />
+          <ArrowUp className="w-5 h-5 text-brown-900" />
         </button>
       </div>
     </div>

@@ -11,7 +11,7 @@ export const AffirmationCard = ({ text, onBookmark }: AffirmationCardProps) => {
       {/* Bookmark icon */}
       <button 
         onClick={onBookmark}
-        className="absolute top-6 right-6 text-brown-900 hover:scale-110 transition-transform"
+        className="absolute top-8 right-6 text-brown-900 hover:scale-110 transition-transform"
         aria-label="Bookmark"
       >
         <Bookmark className="w-5 h-5" />

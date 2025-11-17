@@ -21,7 +21,7 @@ export const ChatTabs = ({ activeTab, onTabChange }: ChatTabsProps) => {
             Daily Chat
           </span>
           {activeTab === "daily" && (
-            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-primary rounded-full" />
+            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#FF6C00] to-[#FFC107] rounded-full" />
           )}
         </button>
         
@@ -39,7 +39,7 @@ export const ChatTabs = ({ activeTab, onTabChange }: ChatTabsProps) => {
             Rewire
           </span>
           {activeTab === "rewire" && (
-            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-primary rounded-full" />
+            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#FF6C00] to-[#FFC107] rounded-full" />
           )}
         </button>
       </div>

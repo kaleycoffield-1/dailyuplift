@@ -117,35 +117,36 @@ const Index = () => {
               </h1>
               
               <div className="space-y-10">
-              <div>
-                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
-                  FEELINGS CHECK
-                </p>
-                <FeelingsCheckCard 
-                  feeling={currentFeeling}
-                  timestamp={getCurrentTime()}
-                />
-              </div>
-              <div>
-                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
-                  LIFT YOUR VIBE EXERCISE
-                </p>
-                <RadialAppreciationCard isCompleted={true} />
-              </div>
-              <div>
-                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
-                  DAILY WISDOM
-                </p>
-                <DailyWisdomCard 
-                  title={dailyWisdomTitle}
-                  content={dailyWisdomContent}
-                />
-              </div>
-              <div>
-                <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
-                  TODAY'S AFFIRMATION
-                </p>
-                <AffirmationCard text={affirmation} />
+                <div>
+                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                    FEELINGS CHECK
+                  </p>
+                  <FeelingsCheckCard 
+                    feeling={currentFeeling}
+                    timestamp={getCurrentTime()}
+                  />
+                </div>
+                <div>
+                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                    LIFT YOUR VIBE EXERCISE
+                  </p>
+                  <RadialAppreciationCard isCompleted={true} />
+                </div>
+                <div>
+                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                    DAILY WISDOM
+                  </p>
+                  <DailyWisdomCard 
+                    title={dailyWisdomTitle}
+                    content={dailyWisdomContent}
+                  />
+                </div>
+                <div>
+                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                    TODAY'S AFFIRMATION
+                  </p>
+                  <AffirmationCard text={affirmation} />
+                </div>
               </div>
             </>
           )}

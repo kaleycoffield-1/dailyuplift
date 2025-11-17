@@ -7,7 +7,7 @@ interface AffirmationCardProps {
 
 export const AffirmationCard = ({ text, onBookmark }: AffirmationCardProps) => {
   return (
-    <div className="bg-peach-300 rounded-[20px] p-8 relative min-h-[200px] flex items-center justify-center border-2 border-border">
+    <div className="bg-peach-300 rounded-[20px] p-8 relative min-h-[300px] flex items-center justify-center border-2 border-border">
       {/* Bookmark icon */}
       <button 
         onClick={onBookmark}

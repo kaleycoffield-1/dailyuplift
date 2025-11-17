@@ -65,21 +65,23 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="px-4">
-        {/* Greeting */}
-        <h1 className="text-2xl text-brown-900 text-center my-6">
-          {getGreeting()}
-        </h1>
-
         <div className="space-y-4 max-w-md mx-auto">
           {/* MORNING STATE */}
           {timeOfDay === "morning" && (
             <>
-              {/* Primary Button */}
-              <button className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold text-base px-8 py-3.5 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[48px]">
-                Begin morning check-in
-              </button>
+              <div className="mt-10">
+                {/* Greeting */}
+                <h1 className="text-2xl text-brown-900 text-center mb-6">
+                  {getGreeting()}
+                </h1>
+                
+                {/* Primary Button */}
+                <button className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold text-base px-8 py-3.5 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[48px]">
+                  Begin morning check-in
+                </button>
+              </div>
 
-              <div className="mt-8 space-y-10">
+              <div className="mt-20 space-y-10">
                 <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
                   DAILY WISDOM
                 </p>
@@ -108,7 +110,13 @@ const Index = () => {
 
           {/* MIDDAY STATE */}
           {timeOfDay === "midday" && (
-            <div className="space-y-10">
+            <>
+              {/* Greeting */}
+              <h1 className="text-2xl text-brown-900 text-center mt-10 mb-6">
+                {getGreeting()}
+              </h1>
+              
+              <div className="space-y-10">
               <div>
                 <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
                   FEELINGS CHECK
@@ -139,18 +147,25 @@ const Index = () => {
                 </p>
                 <AffirmationCard text={affirmation} />
               </div>
-            </div>
+            </>
           )}
 
           {/* EVENING STATE */}
           {timeOfDay === "evening" && (
             <>
-              {/* Primary Button */}
-              <button className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold text-base px-8 py-3.5 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[48px]">
-                Begin evening reflection
-              </button>
+              <div className="mt-10">
+                {/* Greeting */}
+                <h1 className="text-2xl text-brown-900 text-center mb-6">
+                  {getGreeting()}
+                </h1>
+                
+                {/* Primary Button */}
+                <button className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold text-base px-8 py-3.5 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[48px]">
+                  Begin evening reflection
+                </button>
+              </div>
 
-              <div className="mt-8 space-y-10">
+              <div className="mt-20 space-y-10">
                 <div>
                   <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
                     TODAY'S AFFIRMATION

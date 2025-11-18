@@ -7,24 +7,29 @@ type Message = {
 
 interface ChatMessageProps {
   message: Message;
+  isThinking?: boolean;
 }
 
-export const ChatMessage = ({ message }: ChatMessageProps) => {
+export const ChatMessage = ({ message, isThinking = false }: ChatMessageProps) => {
   if (message.role === "assistant") {
     return (
       <div className="flex flex-col items-start max-w-[90%] mb-6">
         {/* UPLIFT Label */}
         <div className="flex items-center gap-2 mb-2">
-          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#FF6C00] to-[#FFC107]" />
+          <div className={`w-2 h-2 rounded-full bg-gradient-to-r from-[#FF6C00] to-[#FFC107] ${
+            isThinking ? 'animate-pulse-glow' : ''
+          }`} />
           <span className="text-xs font-normal text-muted-foreground uppercase tracking-wide">
-            UPLIFT
+            {isThinking ? 'thinking...' : 'UPLIFT'}
           </span>
         </div>
         
         {/* Message Content */}
-        <p className="text-base text-brown-900 leading-relaxed">
-          {message.content}
-        </p>
+        {message.content && (
+          <p className="text-base text-brown-900 leading-relaxed">
+            {message.content}
+          </p>
+        )}
       </div>
     );
   }

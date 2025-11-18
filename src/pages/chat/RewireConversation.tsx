@@ -163,18 +163,9 @@ export const RewireConversation = () => {
             role={message.role}
             content={message.content}
             userName="Kaley"
+            isThinking={message.role === "assistant" && message.content === ""}
           />
         ))}
-        
-        {isLoading && (
-          <div className="mb-5">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#FF6C00] to-[#FFC107]"></div>
-              <span className="text-xs font-normal text-brown-700 uppercase">UPLIFT</span>
-            </div>
-            <p className="text-sm text-brown-600 italic">Thinking...</p>
-          </div>
-        )}
         
         <div ref={messagesEndRef} />
       </div>

@@ -121,12 +121,25 @@ export default {
             transformOrigin: "right",
           },
         },
+        "pulse-glow": {
+          "0%, 100%": {
+            opacity: "1",
+            transform: "scale(1)",
+            boxShadow: "0 0 0 0 rgba(255, 108, 0, 0.7)",
+          },
+          "50%": {
+            opacity: "0.8",
+            transform: "scale(1.3)",
+            boxShadow: "0 0 8px 4px rgba(255, 193, 7, 0.4)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "slideGrowLeft": "slideGrowLeft 0.3s ease-out",
         "slideGrowRight": "slideGrowRight 0.3s ease-out",
+        "pulse-glow": "pulse-glow 1.5s ease-in-out infinite",
       },
     },
   },

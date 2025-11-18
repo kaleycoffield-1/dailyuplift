@@ -19,7 +19,7 @@ export const ChatMessage = ({ message, isThinking = false }: ChatMessageProps) =
           <div className={`w-2 h-2 rounded-full bg-gradient-to-r from-[#FF6C00] to-[#FFC107] ${
             isThinking ? 'animate-pulse-glow' : ''
           }`} />
-          <span className="text-xs font-normal text-muted-foreground uppercase tracking-wide">
+          <span className={`text-xs font-normal text-muted-foreground tracking-wide ${isThinking ? 'italic' : 'uppercase'}`}>
             {isThinking ? 'thinking...' : 'UPLIFT'}
           </span>
         </div>

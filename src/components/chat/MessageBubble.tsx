@@ -13,7 +13,7 @@ export const MessageBubble = ({ role, content, userName = "You", isThinking = fa
           <div className={`w-2 h-2 rounded-full bg-gradient-to-r from-[#FF6C00] to-[#FFC107] ${
             isThinking ? 'animate-pulse-glow' : ''
           }`}></div>
-          <span className="text-xs font-normal text-brown-700 uppercase">
+          <span className={`text-xs font-normal text-brown-700 ${isThinking ? 'italic' : 'uppercase'}`}>
             {isThinking ? 'thinking...' : 'UPLIFT'}
           </span>
         </div>

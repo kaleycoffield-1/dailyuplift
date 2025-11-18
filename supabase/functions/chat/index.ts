@@ -23,6 +23,9 @@ serve(async (req) => {
       ? "You are a supportive AI coach helping users rewire negative thought patterns. Focus on cognitive reframing, positive psychology, and actionable insights. Keep responses warm, empathetic, and constructive."
       : "You are a mindful wellness assistant. Help users with their daily check-ins, reflections, and personal growth. Be encouraging, insightful, and supportive.";
 
+    console.log('System prompt length:', systemPrompt.length);
+    console.log('First 100 chars:', systemPrompt.substring(0, 100));
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {

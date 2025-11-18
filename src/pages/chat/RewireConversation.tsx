@@ -127,9 +127,9 @@ export const RewireConversation = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-[104px] flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Header Bar */}
-      <header className="h-14 px-4 flex items-center justify-between bg-background">
+      <header className="fixed top-0 left-0 right-0 h-14 px-4 flex items-center justify-between bg-background z-50 border-b border-border/20">
         <button onClick={handleBack} className="p-2 hover:scale-110 transition-transform">
           <ChevronLeft className="w-6 h-6 text-brown-900" />
         </button>
@@ -139,12 +139,14 @@ export const RewireConversation = () => {
       </header>
 
       {/* Tab Navigation */}
-      <ChatTabs 
-        activeTab="rewire" 
-        onTabChange={(tab) => {
-          if (tab === "daily") navigate("/chat");
-        }}
-      />
+      <div className="mt-14">
+        <ChatTabs 
+          activeTab="rewire" 
+          onTabChange={(tab) => {
+            if (tab === "daily") navigate("/chat");
+          }}
+        />
+      </div>
       
       {/* Conversation Title */}
       <div className="px-4 py-3 bg-background border-b border-border">

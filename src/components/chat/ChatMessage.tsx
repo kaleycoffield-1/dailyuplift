@@ -16,7 +16,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
         {/* UPLIFT Label */}
         <div className="flex items-center gap-2 mb-2">
           <div className="w-2 h-2 rounded-full bg-primary" />
-          <span className="text-xs font-normal text-primary uppercase tracking-wide">
+          <span className="text-xs font-normal text-muted-foreground uppercase tracking-wide">
             UPLIFT
           </span>
         </div>

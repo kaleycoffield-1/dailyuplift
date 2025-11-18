@@ -111,11 +111,22 @@ export default {
             transformOrigin: "left",
           },
         },
+        "slideGrowRight": {
+          "0%": {
+            transform: "scaleX(0)",
+            transformOrigin: "right",
+          },
+          "100%": {
+            transform: "scaleX(1)",
+            transformOrigin: "right",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "slideGrowLeft": "slideGrowLeft 0.3s ease-out",
+        "slideGrowRight": "slideGrowRight 0.3s ease-out",
       },
     },
   },

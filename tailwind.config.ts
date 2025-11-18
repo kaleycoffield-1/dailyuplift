@@ -111,49 +111,11 @@ export default {
             transformOrigin: "left",
           },
         },
-        "shrinkLeftGrowLeft": {
-          "0%": {
-            transform: "scaleX(1)",
-            transformOrigin: "right",
-          },
-          "50%": {
-            transform: "scaleX(0)",
-            transformOrigin: "right",
-          },
-          "51%": {
-            transform: "scaleX(0)",
-            transformOrigin: "left",
-          },
-          "100%": {
-            transform: "scaleX(1)",
-            transformOrigin: "left",
-          },
-        },
-        "shrinkRightGrowRight": {
-          "0%": {
-            transform: "scaleX(1)",
-            transformOrigin: "left",
-          },
-          "50%": {
-            transform: "scaleX(0)",
-            transformOrigin: "left",
-          },
-          "51%": {
-            transform: "scaleX(0)",
-            transformOrigin: "right",
-          },
-          "100%": {
-            transform: "scaleX(1)",
-            transformOrigin: "right",
-          },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "slideGrowLeft": "slideGrowLeft 0.3s ease-out",
-        "shrinkLeftGrowLeft": "shrinkLeftGrowLeft 0.4s ease-in-out",
-        "shrinkRightGrowRight": "shrinkRightGrowRight 0.4s ease-in-out",
       },
     },
   },

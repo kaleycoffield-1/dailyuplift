@@ -111,7 +111,11 @@ const Chat = () => {
       {/* Chat Container */}
       <div className="flex-1 overflow-y-auto px-4 pt-[120px] pb-[240px]">
         {messages.map((message) => (
-          <ChatMessage key={message.id} message={message} />
+          <ChatMessage 
+            key={message.id} 
+            message={message} 
+            isThinking={message.role === "assistant" && message.content === ""}
+          />
         ))}
         <div ref={messagesEndRef} />
       </div>

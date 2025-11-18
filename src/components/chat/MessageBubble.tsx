@@ -2,19 +2,26 @@ interface MessageBubbleProps {
   role: "user" | "assistant";
   content: string;
   userName?: string;
+  isThinking?: boolean;
 }
 
-export const MessageBubble = ({ role, content, userName = "You" }: MessageBubbleProps) => {
+export const MessageBubble = ({ role, content, userName = "You", isThinking = false }: MessageBubbleProps) => {
   if (role === "assistant") {
     return (
       <div className="mb-5">
         <div className="flex items-center gap-2 mb-2">
-          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#FF6C00] to-[#FFC107]"></div>
-          <span className="text-xs font-normal text-brown-700 uppercase">UPLIFT</span>
+          <div className={`w-2 h-2 rounded-full bg-gradient-to-r from-[#FF6C00] to-[#FFC107] ${
+            isThinking ? 'animate-pulse-glow' : ''
+          }`}></div>
+          <span className="text-xs font-normal text-brown-700 uppercase">
+            {isThinking ? 'thinking...' : 'UPLIFT'}
+          </span>
         </div>
-        <p className="text-base text-brown-900 leading-relaxed max-w-[90%]">
-          {content}
-        </p>
+        {content && (
+          <p className="text-base text-brown-900 leading-relaxed max-w-[90%]">
+            {content}
+          </p>
+        )}
       </div>
     );
   }

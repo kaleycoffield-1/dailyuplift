@@ -5,6 +5,8 @@ import { BottomNav } from "@/components/home/BottomNav";
 import { ChatTabs } from "@/components/chat/ChatTabs";
 import { ChatMessage } from "@/components/chat/ChatMessage";
 import { ChatInput } from "@/components/chat/ChatInput";
+import { useStreamingChat } from "@/hooks/useStreamingChat";
+import { useToast } from "@/hooks/use-toast";
 
 type Message = {
   id: string;
@@ -15,6 +17,8 @@ type Message = {
 
 const Chat = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const { sendMessage: streamChat, isLoading } = useStreamingChat({ type: 'daily' });
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -30,7 +34,7 @@ const Chat = () => {
     }
   };
 
-  const handleSendMessage = (content: string) => {
+  const handleSendMessage = async (content: string) => {
     const newMessage: Message = {
       id: Date.now().toString(),
       role: "user",
@@ -39,16 +43,42 @@ const Chat = () => {
     };
     setMessages((prev) => [...prev, newMessage]);
     
-    // Mock AI response (will be replaced with Claude API later)
-    setTimeout(() => {
-      const aiResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: "That's a wonderful intention! What actions will you take today to make this happen?",
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, aiResponse]);
-    }, 1000);
+    // Add placeholder for AI response
+    const aiMessageId = (Date.now() + 1).toString();
+    const aiMessage: Message = {
+      id: aiMessageId,
+      role: "assistant",
+      content: "",
+      timestamp: new Date(),
+    };
+    setMessages((prev) => [...prev, aiMessage]);
+
+    try {
+      await streamChat(
+        [...messages, newMessage],
+        (chunk) => {
+          // Update the AI message with streaming content
+          setMessages((prev) => 
+            prev.map((msg) =>
+              msg.id === aiMessageId
+                ? { ...msg, content: msg.content + chunk }
+                : msg
+            )
+          );
+        },
+        () => {
+          console.log('Streaming complete');
+        }
+      );
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to get response. Please try again.",
+        variant: "destructive",
+      });
+      // Remove the failed message
+      setMessages((prev) => prev.filter((msg) => msg.id !== aiMessageId));
+    }
   };
 
   return (

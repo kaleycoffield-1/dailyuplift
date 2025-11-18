@@ -4,6 +4,8 @@ import { Menu, User } from "lucide-react";
 import { ChatTabs } from "@/components/chat/ChatTabs";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { BottomNav } from "@/components/home/BottomNav";
+import { useStreamingChat } from "@/hooks/useStreamingChat";
+import { useToast } from "@/hooks/use-toast";
 
 type Message = {
   id: string;
@@ -14,6 +16,8 @@ type Message = {
 
 export const RewireNew = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const { sendMessage: streamChat, isLoading } = useStreamingChat({ type: 'rewire' });
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -23,8 +27,7 @@ export const RewireNew = () => {
     },
   ]);
 
-  const handleSendMessage = (content: string) => {
-    // Add user message
+  const handleSendMessage = async (content: string) => {
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
@@ -34,16 +37,52 @@ export const RewireNew = () => {
     
     setMessages((prev) => [...prev, userMessage]);
 
-    // Mock: Create conversation and navigate to it
-    // In Phase 2, this will save to database and get real ID
-    const mockConversationId = Date.now().toString();
-    const conversationTitle = content.substring(0, 50) + (content.length > 50 ? "..." : "");
-    
-    setTimeout(() => {
-      navigate(`/chat/rewire/${mockConversationId}`, {
-        state: { title: conversationTitle, initialMessages: [...messages, userMessage] }
+    // Add placeholder for AI response
+    const aiMessageId = (Date.now() + 1).toString();
+    const aiMessage: Message = {
+      id: aiMessageId,
+      role: "assistant",
+      content: "",
+      timestamp: new Date().toISOString(),
+    };
+    setMessages((prev) => [...prev, aiMessage]);
+
+    try {
+      await streamChat(
+        messages.map(m => ({ ...m, timestamp: new Date(m.timestamp) })).concat({ ...userMessage, timestamp: new Date() }),
+        (chunk) => {
+          setMessages((prev) => 
+            prev.map((msg) =>
+              msg.id === aiMessageId
+                ? { ...msg, content: msg.content + chunk }
+                : msg
+            )
+          );
+        },
+        () => {
+          // After first response, navigate to conversation view
+          const conversationTitle = content.substring(0, 50) + (content.length > 50 ? "..." : "");
+          const mockConversationId = Date.now().toString();
+          
+          navigate(`/chat/rewire/${mockConversationId}`, {
+            state: { 
+              title: conversationTitle, 
+              initialMessages: messages.concat(userMessage, { 
+                ...aiMessage, 
+                content: messages.find(m => m.id === aiMessageId)?.content || "" 
+              })
+            }
+          });
+        }
+      );
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to get response. Please try again.",
+        variant: "destructive",
       });
-    }, 100);
+      setMessages((prev) => prev.filter((msg) => msg.id !== aiMessageId));
+    }
   };
 
   return (

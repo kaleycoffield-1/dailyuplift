@@ -7,12 +7,15 @@ interface ChatInputProps {
 
 export const ChatInput = ({ onSendMessage }: ChatInputProps) => {
   const [message, setMessage] = useState("");
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSend = () => {
     if (message.trim()) {
       onSendMessage(message.trim());
       setMessage("");
+      setHasSubmitted(true);
       if (textareaRef.current) {
         textareaRef.current.style.height = "auto";
       }
@@ -30,9 +33,20 @@ export const ChatInput = ({ onSendMessage }: ChatInputProps) => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
       const scrollHeight = textareaRef.current.scrollHeight;
-      textareaRef.current.style.height = `${Math.min(scrollHeight, 200)}px`;
+      
+      // Calculate height based on state
+      let targetHeight = 120;
+      if (hasSubmitted && !isFocused) {
+        targetHeight = 48;
+      } else if (hasSubmitted && isFocused) {
+        targetHeight = Math.min(scrollHeight, 200);
+      } else {
+        targetHeight = Math.max(120, Math.min(scrollHeight, 200));
+      }
+      
+      textareaRef.current.style.height = `${targetHeight}px`;
     }
-  }, [message]);
+  }, [message, hasSubmitted, isFocused]);
 
   return (
     <div className="fixed bottom-[104px] left-0 right-0 px-4 pb-4 bg-background flex justify-center">
@@ -42,9 +56,11 @@ export const ChatInput = ({ onSendMessage }: ChatInputProps) => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           placeholder="Type your intention, desire, or manifestation"
-          className="w-full min-h-[120px] bg-transparent text-sm text-brown-900 placeholder:text-brown-600/60 placeholder:italic resize-none outline-none pr-14"
-          style={{ height: "120px" }}
+          className="w-full bg-transparent text-sm text-brown-900 placeholder:text-brown-600/60 placeholder:italic resize-none outline-none pr-14 transition-all duration-300 ease-in-out"
+          style={{ height: hasSubmitted && !isFocused ? "48px" : "120px" }}
         />
         
         <button

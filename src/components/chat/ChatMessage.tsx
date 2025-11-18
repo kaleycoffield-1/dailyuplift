@@ -12,7 +12,7 @@ interface ChatMessageProps {
 export const ChatMessage = ({ message }: ChatMessageProps) => {
   if (message.role === "assistant") {
     return (
-      <div className="flex flex-col items-start max-w-[90%]">
+      <div className="flex flex-col items-start max-w-[90%] mb-6">
         {/* UPLIFT Label */}
         <div className="flex items-center gap-2 mb-2">
           <div className="w-2 h-2 rounded-full bg-primary" />
@@ -31,7 +31,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
 
   // User message (aligned right)
   return (
-    <div className="flex justify-end">
+    <div className="flex justify-end mb-6">
       <div className="max-w-[80%] bg-card rounded-2xl px-4 py-3 border-2 border-border">
         <p className="text-base text-brown-900 leading-relaxed">
           {message.content}

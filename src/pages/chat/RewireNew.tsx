@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu, User } from "lucide-react";
 import { ChatTabs } from "@/components/chat/ChatTabs";
@@ -18,6 +18,7 @@ export const RewireNew = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { sendMessage: streamChat, isLoading } = useStreamingChat({ type: 'rewire' });
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -26,6 +27,15 @@ export const RewireNew = () => {
       timestamp: new Date().toISOString(),
     },
   ]);
+
+  // Auto-scroll to bottom when messages change
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleSendMessage = async (content: string) => {
     const userMessage: Message = {
@@ -106,7 +116,7 @@ export const RewireNew = () => {
       />
 
       {/* Chat Container */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6">
+      <div className="flex-1 overflow-y-auto px-4 py-4 pb-[240px]">
         {messages.map((message) => (
           <div key={message.id} className="mb-5">
             {message.role === "assistant" ? (
@@ -131,6 +141,7 @@ export const RewireNew = () => {
             )}
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
 
       {/* Message Input */}

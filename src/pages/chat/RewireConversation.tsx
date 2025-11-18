@@ -154,7 +154,7 @@ export const RewireConversation = () => {
       </div>
 
       {/* Chat Container */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6">
+      <div className="flex-1 overflow-y-auto px-4 py-4 pb-[240px]">
         {messages.map((message) => (
           <MessageBubble
             key={message.id}

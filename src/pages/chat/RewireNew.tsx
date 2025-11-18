@@ -108,7 +108,7 @@ export const RewireNew = () => {
       </header>
 
       {/* Tab Navigation */}
-      <div className="mt-14">
+      <div className="fixed top-14 left-0 right-0 z-40 bg-background">
         <ChatTabs 
           activeTab="rewire" 
           onTabChange={(tab) => {
@@ -118,7 +118,7 @@ export const RewireNew = () => {
       </div>
 
       {/* Chat Container */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 pb-[240px]">
+      <div className="flex-1 overflow-y-auto px-4 pt-[120px] pb-[240px]">
         {messages.map((message) => (
           <div key={message.id} className="mb-5">
             {message.role === "assistant" ? (

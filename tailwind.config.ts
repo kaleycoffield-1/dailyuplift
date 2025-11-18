@@ -101,10 +101,21 @@ export default {
             height: "0",
           },
         },
+        "slideGrowLeft": {
+          "0%": {
+            transform: "scaleX(0)",
+            transformOrigin: "left",
+          },
+          "100%": {
+            transform: "scaleX(1)",
+            transformOrigin: "left",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "slideGrowLeft": "slideGrowLeft 0.3s ease-out",
       },
     },
   },

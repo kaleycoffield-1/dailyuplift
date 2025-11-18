@@ -92,9 +92,9 @@ const Chat = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-[104px] flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Header Bar */}
-      <header className="h-14 px-4 flex items-center justify-between bg-background">
+      <header className="fixed top-0 left-0 right-0 h-14 px-4 flex items-center justify-between bg-background z-50 border-b border-border/20">
         <button className="p-2 hover:scale-110 transition-transform">
           <Menu className="w-6 h-6 text-brown-900" />
         </button>
@@ -104,7 +104,9 @@ const Chat = () => {
       </header>
 
       {/* Tab Navigation */}
-      <ChatTabs activeTab="daily" onTabChange={handleTabChange} />
+      <div className="mt-14">
+        <ChatTabs activeTab="daily" onTabChange={handleTabChange} />
+      </div>
 
       {/* Chat Container */}
       <div className="flex-1 overflow-y-auto px-4 py-4 pb-[240px]">

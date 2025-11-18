@@ -9,37 +9,37 @@ export const ChatTabs = ({ activeTab, onTabChange }: ChatTabsProps) => {
       <div className="flex w-full max-w-[480px] min-w-[320px]">
         <button
           onClick={() => onTabChange("daily")}
-          className="relative pb-2 flex-1 text-center"
+          className="relative pb-2 flex-1 text-center transition-all duration-200"
         >
           <span
             className={`${
               activeTab === "daily"
                 ? "font-semibold text-brown-900"
                 : "font-normal text-brown-700"
-            } text-lg`}
+            } text-lg transition-all duration-300`}
           >
             Daily Chat
           </span>
           {activeTab === "daily" && (
-            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#FF6C00] to-[#FFC107] rounded-full" />
+            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#FF6C00] to-[#FFC107] rounded-full animate-in fade-in slide-in-from-bottom-1 duration-300" />
           )}
         </button>
         
         <button
           onClick={() => onTabChange("rewire")}
-          className="relative pb-2 flex-1 text-center"
+          className="relative pb-2 flex-1 text-center transition-all duration-200"
         >
           <span
             className={`${
               activeTab === "rewire"
                 ? "font-semibold text-brown-900"
                 : "font-normal text-brown-700"
-            } text-lg`}
+            } text-lg transition-all duration-300`}
           >
             Rewire
           </span>
           {activeTab === "rewire" && (
-            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#FF6C00] to-[#FFC107] rounded-full" />
+            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#FF6C00] to-[#FFC107] rounded-full animate-in fade-in slide-in-from-bottom-1 duration-300" />
           )}
         </button>
       </div>

@@ -139,7 +139,7 @@ export const RewireConversation = () => {
       </header>
 
       {/* Tab Navigation */}
-      <div className="mt-14">
+      <div className="fixed top-14 left-0 right-0 z-40 bg-background">
         <ChatTabs 
           activeTab="rewire" 
           onTabChange={(tab) => {
@@ -149,14 +149,14 @@ export const RewireConversation = () => {
       </div>
       
       {/* Conversation Title */}
-      <div className="px-4 py-3 bg-background border-b border-border">
+      <div className="fixed top-[106px] left-0 right-0 z-30 px-4 py-3 bg-background border-b border-border">
         <h2 className="text-lg font-semibold text-brown-900 truncate">
           {title}
         </h2>
       </div>
 
       {/* Chat Container */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 pb-[240px]">
+      <div className="flex-1 overflow-y-auto px-4 pt-[170px] pb-[240px]">
         {messages.map((message) => (
           <MessageBubble
             key={message.id}

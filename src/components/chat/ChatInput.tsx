@@ -36,11 +36,21 @@ export const ChatInput = ({ onSendMessage }: ChatInputProps) => {
       
       // Calculate height based on state
       let targetHeight = 120;
-      if (hasSubmitted && !isFocused) {
-        targetHeight = 48;
-      } else if (hasSubmitted && isFocused) {
-        targetHeight = Math.min(scrollHeight, 200);
+      
+      if (hasSubmitted) {
+        // After first submission
+        if (message.trim() === "") {
+          // Empty field stays at 48px whether focused or not
+          targetHeight = 48;
+        } else if (isFocused) {
+          // When typing, expand with content
+          targetHeight = Math.min(scrollHeight, 200);
+        } else {
+          // When blurred with content, shrink to 48px
+          targetHeight = 48;
+        }
       } else {
+        // Before first submission, keep at 120px minimum
         targetHeight = Math.max(120, Math.min(scrollHeight, 200));
       }
       
@@ -60,7 +70,7 @@ export const ChatInput = ({ onSendMessage }: ChatInputProps) => {
           onBlur={() => setIsFocused(false)}
           placeholder="Type your intention, desire, or manifestation"
           className="w-full bg-transparent text-sm text-brown-900 placeholder:text-brown-600/60 placeholder:italic resize-none outline-none pr-14 transition-all duration-300 ease-in-out"
-          style={{ height: hasSubmitted && !isFocused ? "48px" : "120px" }}
+          style={{ height: hasSubmitted && message.trim() === "" ? "48px" : hasSubmitted && !isFocused ? "48px" : "120px" }}
         />
         
         <button

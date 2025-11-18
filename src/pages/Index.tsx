@@ -7,20 +7,83 @@ import { FeelingsCheckCard } from "@/components/home/FeelingsCheckCard";
 import { RadialAppreciationCard } from "@/components/home/RadialAppreciationCard";
 import { AffirmationCard } from "@/components/home/AffirmationCard";
 import { BottomNav } from "@/components/home/BottomNav";
+import { useGenerateContent } from "@/hooks/useGenerateContent";
+import { supabase } from "@/integrations/supabase/client";
 
 type TimeOfDay = "morning" | "midday" | "evening";
 
 const Index = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { generateContent, isGenerating } = useGenerateContent();
   const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>("morning");
+  const [dailyWisdom, setDailyWisdom] = useState({ 
+    title: "SHARE YOUR JOY",
+    content: "The best thing you can do for those around you is to cultivate and share your own happiness."
+  });
+  const [affirmation, setAffirmation] = useState("I am confident and capable.");
 
-  // Placeholder data
   const userName = "Kaley";
-  const dailyWisdomTitle = "SHARE YOUR JOY";
-  const dailyWisdomContent = "The best thing you can do for those around you is to cultivate and share your own happiness.";
-  const affirmation = "I am confident and capable.";
   const currentFeeling = 65;
+  
+  // Fetch or generate daily wisdom
+  useEffect(() => {
+    const fetchWisdom = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('daily_wisdom')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .single();
+
+        if (data && !error) {
+          setDailyWisdom({ title: data.title, content: data.content });
+        } else {
+          // Generate new wisdom if none exists
+          const newWisdom = await generateContent('wisdom');
+          if (newWisdom) {
+            setDailyWisdom({ title: newWisdom.title, content: newWisdom.content });
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching wisdom:', error);
+      }
+    };
+
+    fetchWisdom();
+  }, []);
+
+  // Fetch or generate affirmation
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const fetchAffirmation = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('affirmations')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .single();
+
+        if (data && !error) {
+          setAffirmation(data.text);
+        } else {
+          // Generate new affirmation if none exists
+          const newAffirmation = await generateContent('affirmation', user.id);
+          if (newAffirmation) {
+            setAffirmation(newAffirmation.text);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching affirmation:', error);
+      }
+    };
+
+    fetchAffirmation();
+  }, [user?.id]);
   
   // Get current time formatted
   const getCurrentTime = () => {
@@ -89,8 +152,8 @@ const Index = () => {
                     DAILY WISDOM
                   </p>
                   <DailyWisdomCard 
-                    title={dailyWisdomTitle}
-                    content={dailyWisdomContent}
+                    title={dailyWisdom.title}
+                    content={dailyWisdom.content}
                   />
                 </div>
                 <div>
@@ -141,8 +204,8 @@ const Index = () => {
                     DAILY WISDOM
                   </p>
                   <DailyWisdomCard 
-                    title={dailyWisdomTitle}
-                    content={dailyWisdomContent}
+                    title={dailyWisdom.title}
+                    content={dailyWisdom.content}
                   />
                 </div>
                 <div>
@@ -185,8 +248,8 @@ const Index = () => {
                     DAILY WISDOM
                   </p>
                   <DailyWisdomCard 
-                    title={dailyWisdomTitle}
-                    content={dailyWisdomContent}
+                    title={dailyWisdom.title}
+                    content={dailyWisdom.content}
                   />
                 </div>
                 <div>

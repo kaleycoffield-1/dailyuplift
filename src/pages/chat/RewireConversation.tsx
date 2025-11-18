@@ -5,6 +5,8 @@ import { ChatTabs } from "@/components/chat/ChatTabs";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { BottomNav } from "@/components/home/BottomNav";
 import { MessageBubble } from "@/components/chat/MessageBubble";
+import { useStreamingChat } from "@/hooks/useStreamingChat";
+import { useToast } from "@/hooks/use-toast";
 
 // Mock conversation data
 const mockConversationData = {
@@ -54,6 +56,8 @@ export const RewireConversation = () => {
   const { id } = useParams();
   const location = useLocation();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
+  const { sendMessage: streamChat, isLoading } = useStreamingChat({ type: 'rewire' });
 
   // Get conversation data from route state or mock data
   const conversationData = location.state || mockConversationData[id as keyof typeof mockConversationData];
@@ -61,7 +65,6 @@ export const RewireConversation = () => {
   const [messages, setMessages] = useState(
     conversationData?.initialMessages || conversationData?.messages || []
   );
-  const [isTyping, setIsTyping] = useState(false);
   const [title, setTitle] = useState(conversationData?.title || "Conversation");
 
   // Auto-scroll to bottom
@@ -71,10 +74,9 @@ export const RewireConversation = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isTyping]);
+  }, [messages]);
 
-  const handleSendMessage = (content: string) => {
-    // Add user message
+  const handleSendMessage = async (content: string) => {
     const userMessage = {
       id: Date.now().toString(),
       role: "user" as const,
@@ -84,20 +86,40 @@ export const RewireConversation = () => {
     
     setMessages((prev) => [...prev, userMessage]);
 
-    // Mock AI response
-    setIsTyping(true);
-    
-    setTimeout(() => {
-      const assistantMessage = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant" as const,
-        content: "That's a really insightful observation. Let's explore this together. What specifically about the insurance situation is triggering this feeling?",
-        timestamp: new Date().toISOString(),
-      };
-      
-      setMessages((prev) => [...prev, assistantMessage]);
-      setIsTyping(false);
-    }, 2000);
+    // Add placeholder for AI response
+    const aiMessageId = (Date.now() + 1).toString();
+    const aiMessage = {
+      id: aiMessageId,
+      role: "assistant" as const,
+      content: "",
+      timestamp: new Date().toISOString(),
+    };
+    setMessages((prev) => [...prev, aiMessage]);
+
+    try {
+      await streamChat(
+        messages.map(m => ({ ...m, timestamp: new Date(m.timestamp) })).concat({ ...userMessage, timestamp: new Date() }),
+        (chunk) => {
+          setMessages((prev) => 
+            prev.map((msg) =>
+              msg.id === aiMessageId
+                ? { ...msg, content: msg.content + chunk }
+                : msg
+            )
+          );
+        },
+        () => {
+          console.log('Streaming complete');
+        }
+      );
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to get response. Please try again.",
+        variant: "destructive",
+      });
+      setMessages((prev) => prev.filter((msg) => msg.id !== aiMessageId));
+    }
   };
 
   const handleBack = () => {
@@ -142,7 +164,7 @@ export const RewireConversation = () => {
           />
         ))}
         
-        {isTyping && (
+        {isLoading && (
           <div className="mb-5">
             <div className="flex items-center gap-2 mb-2">
               <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#FF6C00] to-[#FFC107]"></div>

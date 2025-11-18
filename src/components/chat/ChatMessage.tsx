@@ -15,7 +15,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
       <div className="flex flex-col items-start max-w-[90%] mb-6">
         {/* UPLIFT Label */}
         <div className="flex items-center gap-2 mb-2">
-          <div className="w-2 h-2 rounded-full bg-primary" />
+          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#FF6C00] to-[#FFC107]" />
           <span className="text-xs font-normal text-muted-foreground uppercase tracking-wide">
             UPLIFT
           </span>

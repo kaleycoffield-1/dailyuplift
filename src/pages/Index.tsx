@@ -156,15 +156,7 @@ const Index = () => {
                     content={dailyWisdom.content}
                   />
                 </div>
-                <div>
-                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
-                    FEELINGS CHECK
-                  </p>
-                  <FeelingsCheckCard 
-                    feeling={currentFeeling}
-                    timestamp={getCurrentTime()}
-                  />
-                </div>
+                <FeelingsCheckCard />
                 <div>
                   <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
                     LIFT YOUR VIBE EXERCISE
@@ -184,15 +176,7 @@ const Index = () => {
               </h1>
               
               <div className="space-y-10">
-                <div>
-                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
-                    FEELINGS CHECK
-                  </p>
-                  <FeelingsCheckCard 
-                    feeling={currentFeeling}
-                    timestamp={getCurrentTime()}
-                  />
-                </div>
+                <FeelingsCheckCard />
                 <div>
                   <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
                     LIFT YOUR VIBE EXERCISE
@@ -252,15 +236,7 @@ const Index = () => {
                     content={dailyWisdom.content}
                   />
                 </div>
-                <div>
-                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
-                    FEELINGS CHECK
-                  </p>
-                  <FeelingsCheckCard 
-                    feeling={currentFeeling}
-                    timestamp={getCurrentTime()}
-                  />
-                </div>
+                <FeelingsCheckCard />
               </div>
             </>
           )}

@@ -18,9 +18,9 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <Toaster />
-    <Sonner />
     <AuthProvider>
+      <Toaster />
+      <Sonner />
       <Routes>
         <Route path="/auth" element={<Auth />} />
         <Route path="/reset-password" element={<ResetPassword />} />

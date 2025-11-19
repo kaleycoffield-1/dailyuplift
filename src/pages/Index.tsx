@@ -161,7 +161,10 @@ const Index = () => {
                 </h1>
                 
                 {/* Primary Button */}
-                <button className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold text-base px-8 py-3.5 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[48px] mb-20">
+                <button 
+                  onClick={() => navigate('/chat')}
+                  className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold text-base px-8 py-3.5 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[48px] mb-20"
+                >
                   Begin morning check-in
                 </button>
               </div>

@@ -236,7 +236,9 @@ const Index = () => {
                     content={dailyWisdom.content}
                   />
                 </div>
-                <FeelingsCheckCard />
+                <div className="pb-28">
+                  <FeelingsCheckCard />
+                </div>
               </div>
             </>
           )}

@@ -6,12 +6,12 @@ type ContentType = 'wisdom' | 'affirmation';
 export const useGenerateContent = () => {
   const [isGenerating, setIsGenerating] = useState(false);
 
-  const generateContent = async (type: ContentType, userId?: string) => {
+  const generateContent = async (type: ContentType) => {
     setIsGenerating(true);
     
     try {
       const { data, error } = await supabase.functions.invoke('generate-content', {
-        body: { type, userId }
+        body: { type }
       });
 
       if (error) throw error;

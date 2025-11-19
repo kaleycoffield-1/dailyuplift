@@ -78,7 +78,7 @@ const Index = () => {
           setAffirmation(data.text);
         } else {
           // Generate new affirmation if none exists
-          const newAffirmation = await generateContent('affirmation', user.id);
+          const newAffirmation = await generateContent('affirmation');
           if (newAffirmation) {
             setAffirmation(newAffirmation.text);
           }

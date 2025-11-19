@@ -128,8 +128,8 @@ const Index = () => {
         </button>
       </header>
 
-      {/* Main Content - Scrollable and Centered */}
-      <main className="flex-1 overflow-y-auto px-4 pt-14 flex items-center justify-center">
+      {/* Main Content - Scrollable */}
+      <main className="flex-1 overflow-y-auto px-4 pt-14">
         <div className="space-y-4 max-w-md mx-auto">
           {/* MORNING STATE */}
           {timeOfDay === "morning" && (

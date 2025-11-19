@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
-import { Slider } from "@/components/ui/slider";
+import { CenterSlider } from "./CenterSlider";
 
 type FeelingsState = "collapsed" | "expanded" | "transition" | "complete";
 
@@ -215,13 +215,13 @@ export const FeelingsCheckCard = () => {
 
             {/* Slider */}
             <div className="space-y-2">
-              <Slider 
+              <CenterSlider 
                 value={sliderValue} 
                 onValueChange={handleSliderChange}
                 onPointerDown={(e) => e.stopPropagation()}
                 max={100} 
                 step={1}
-                className="w-full cursor-grab active:cursor-grabbing"
+                className="w-full"
               />
               <div className="flex justify-between text-sm text-brown-700">
                 <span>Terrible</span>

@@ -152,7 +152,7 @@ export const FeelingsCheckCard = () => {
   // STATE 1: COLLAPSED
   if (state === "collapsed") {
     return (
-      <div ref={cardRef}>
+      <div ref={cardRef} className="pb-6">
         <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
           FEELINGS CHECK
         </h3>
@@ -213,7 +213,7 @@ export const FeelingsCheckCard = () => {
     const availableEmotions = getEmotionsForRange(sliderValue[0]);
     
     return (
-      <div ref={cardRef}>
+      <div ref={cardRef} className="pb-6">
         <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
           FEELINGS CHECK
         </h3>
@@ -273,7 +273,7 @@ export const FeelingsCheckCard = () => {
   // STATE 3: TRANSITION
   if (state === "transition" && selectedEmotion) {
     return (
-      <div ref={cardRef}>
+      <div ref={cardRef} className="pb-6">
         <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
           FEELINGS CHECK
         </h3>
@@ -304,7 +304,7 @@ export const FeelingsCheckCard = () => {
   // STATE 4: COMPLETE
   if (state === "complete" && selectedEmotion) {
     return (
-      <div ref={cardRef}>
+      <div ref={cardRef} className="pb-6">
         <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
           FEELINGS CHECK
         </h3>

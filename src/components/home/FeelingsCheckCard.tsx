@@ -153,11 +153,11 @@ export const FeelingsCheckCard = () => {
   if (state === "collapsed") {
     return (
       <div ref={cardRef} className="pb-6">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3">
           FEELINGS CHECK
         </h3>
         <div 
-          className="bg-peach-300 rounded-[16px] p-5 mx-4 cursor-pointer hover:bg-peach-400 transition-colors"
+          className="bg-peach-300 rounded-[16px] p-5 cursor-pointer hover:bg-peach-400 transition-colors"
           onClick={handleExpand}
         >
           <div className="flex items-start justify-between mb-4">
@@ -214,10 +214,10 @@ export const FeelingsCheckCard = () => {
     
     return (
       <div ref={cardRef} className="pb-6">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3">
           FEELINGS CHECK
         </h3>
-        <div className="bg-peach-300 rounded-[16px] p-5 mx-4 animate-fade-in">
+        <div className="bg-peach-300 rounded-[16px] p-5 animate-fade-in">
           <div className="flex items-start justify-between mb-6">
             <div>
               <h3 className="font-semibold text-base text-brown-900 mb-1">
@@ -274,10 +274,10 @@ export const FeelingsCheckCard = () => {
   if (state === "transition" && selectedEmotion) {
     return (
       <div ref={cardRef} className="pb-6">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3">
           FEELINGS CHECK
         </h3>
-        <div className="bg-peach-300 rounded-[16px] p-5 mx-4">
+        <div className="bg-peach-300 rounded-[16px] p-5">
           <div className="flex items-start justify-between mb-6">
             <div>
               <h3 className="font-semibold text-base text-brown-900 mb-1">
@@ -305,10 +305,10 @@ export const FeelingsCheckCard = () => {
   if (state === "complete" && selectedEmotion) {
     return (
       <div ref={cardRef} className="pb-6">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3">
           FEELINGS CHECK
         </h3>
-        <div className="bg-peach-300 rounded-[16px] p-5 mx-4 animate-fade-in">
+        <div className="bg-peach-300 rounded-[16px] p-5 animate-fade-in">
           <div className="flex items-center justify-between mb-6">
             <button 
               onClick={handleEdit}

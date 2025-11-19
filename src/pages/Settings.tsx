@@ -11,6 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { z } from "zod";
 
 export default function Settings() {
   const { user, signOut } = useAuth();
@@ -104,6 +105,18 @@ export default function Settings() {
   const handleSaveNotificationTimes = async () => {
     if (!user) return;
     
+    // Validate notification times
+    const timeSchema = z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format (HH:MM)");
+    
+    try {
+      timeSchema.parse(morningTime);
+      timeSchema.parse(afternoonTime);
+      timeSchema.parse(eveningTime);
+    } catch (validationError) {
+      toast.error("Invalid time format. Please use HH:MM format (e.g., 08:00)");
+      return;
+    }
+    
     setSavingTimes(true);
     try {
       const { error } = await supabase
@@ -136,9 +149,10 @@ export default function Settings() {
 
     setLoading(true);
     try {
-      const { error } = await supabase.auth.admin.deleteUser(user.id);
+      const { data, error } = await supabase.functions.invoke('delete-user');
 
       if (error) {
+        console.error('Delete account error:', error);
         toast.error("Failed to delete account. Please contact support.");
         return;
       }
@@ -146,6 +160,7 @@ export default function Settings() {
       toast.success("Account deleted successfully");
       await signOut();
     } catch (error) {
+      console.error('Unexpected error:', error);
       toast.error("An unexpected error occurred");
     } finally {
       setLoading(false);

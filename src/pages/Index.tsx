@@ -117,7 +117,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-[120px]">
+    <div className="min-h-screen bg-background pb-[128px]">
       {/* Header Bar */}
       <header className="h-14 px-4 flex items-center justify-between">
         <button className="p-2 hover:scale-110 transition-transform">

@@ -208,8 +208,7 @@ export const FeelingsCheckCard = () => {
           <div className="space-y-4">
             {/* Current emotion display */}
             <div className="text-center mb-2">
-              <span className="text-2xl">{currentEmotion.emoji}</span>
-              <p className="text-base font-semibold text-brown-900 mt-1">
+              <p className="text-lg font-semibold text-brown-900">
                 {currentEmotion.name}
               </p>
             </div>
@@ -219,10 +218,10 @@ export const FeelingsCheckCard = () => {
               <Slider 
                 value={sliderValue} 
                 onValueChange={handleSliderChange}
-                onValueCommit={handleSliderCommit}
+                onPointerDown={(e) => e.stopPropagation()}
                 max={100} 
                 step={1}
-                className="w-full"
+                className="w-full cursor-grab active:cursor-grabbing"
               />
               <div className="flex justify-between text-sm text-brown-700">
                 <span>Terrible</span>
@@ -230,9 +229,12 @@ export const FeelingsCheckCard = () => {
               </div>
             </div>
 
-            <p className="text-xs text-brown-700 text-center mt-4">
-              Drag the slider and release to log your feeling
-            </p>
+            <button
+              onClick={handleSliderCommit}
+              className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold text-base px-6 py-3 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all mt-4"
+            >
+              Log this feeling
+            </button>
           </div>
         </div>
       </div>
@@ -300,7 +302,7 @@ export const FeelingsCheckCard = () => {
 
             <div className="bg-gradient-to-r from-gradient-start to-gradient-end rounded-[20px] px-6 py-3 mb-4">
               <span className="text-brown-900 font-semibold text-base">
-                {selectedEmotion.emoji} {selectedEmotion.name}
+                {selectedEmotion.name}
               </span>
             </div>
 

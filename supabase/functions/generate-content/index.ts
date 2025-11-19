@@ -12,9 +12,41 @@ serve(async (req) => {
   }
 
   try {
-    const { type, userId } = await req.json();
-    const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY');
+    const { type } = await req.json();
     
+    // Validate input type
+    if (!type || (type !== 'wisdom' && type !== 'affirmation')) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid type. Must be "wisdom" or "affirmation"' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Extract authenticated user ID from JWT
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Missing authorization header' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Verify the JWT and get user
+    const token = authHeader.replace('Bearer ', '');
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+    
+    if (authError || !user) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY');
     if (!ANTHROPIC_API_KEY) {
       throw new Error('ANTHROPIC_API_KEY is not configured');
     }
@@ -54,11 +86,7 @@ serve(async (req) => {
     const data = await response.json();
     const content = data.content[0].text;
 
-    // Store in database
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
+    // Store in database (supabase client already created above)
     if (type === 'wisdom') {
       // Parse title and content from the response
       const lines = content.split('\n').filter((line: string) => line.trim());
@@ -89,7 +117,7 @@ serve(async (req) => {
         .from('affirmations')
         .insert({
           text: content,
-          user_id: userId,
+          user_id: user.id,
         })
         .select()
         .single();

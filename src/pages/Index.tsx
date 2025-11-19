@@ -119,7 +119,7 @@ const Index = () => {
   return (
     <div className="h-screen bg-background flex flex-col overflow-hidden">
       {/* Header Bar - Fixed */}
-      <header className="h-14 px-4 flex items-center justify-between flex-shrink-0">
+      <header className="h-14 px-4 flex items-center justify-between flex-shrink-0 fixed top-0 left-0 right-0 bg-background z-10">
         <button className="p-2 hover:scale-110 transition-transform">
           <Menu className="w-6 h-6 text-brown-900" />
         </button>
@@ -128,8 +128,8 @@ const Index = () => {
         </button>
       </header>
 
-      {/* Main Content - Scrollable */}
-      <main className="flex-1 overflow-y-auto px-4 pb-6">
+      {/* Main Content - Scrollable and Centered */}
+      <main className="flex-1 overflow-y-auto px-4 pt-14 pb-[104px] flex items-center justify-center">
         <div className="space-y-4 max-w-md mx-auto">
           {/* MORNING STATE */}
           {timeOfDay === "morning" && (

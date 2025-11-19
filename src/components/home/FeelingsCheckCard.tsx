@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
 
 type FeelingsState = "collapsed" | "expanded" | "transition" | "complete";
 
@@ -63,15 +64,50 @@ const getEncouragementMessage = (type: "positive" | "neutral" | "challenging"): 
   return messages[Math.floor(Math.random() * messages.length)];
 };
 
+const getEmotionFromScore = (score: number): Emotion => {
+  // Map 0-100 score to emotions (worst to best)
+  if (score < 4) return emotions.find(e => e.name === "Angry")!;
+  if (score < 8) return emotions.find(e => e.name === "Sad")!;
+  if (score < 12) return emotions.find(e => e.name === "Disappointed")!;
+  if (score < 16) return emotions.find(e => e.name === "Frustrated")!;
+  if (score < 20) return emotions.find(e => e.name === "Overwhelmed")!;
+  if (score < 24) return emotions.find(e => e.name === "Anxious")!;
+  if (score < 28) return emotions.find(e => e.name === "Worried")!;
+  if (score < 32) return emotions.find(e => e.name === "Stressed")!;
+  if (score < 36) return emotions.find(e => e.name === "Lonely")!;
+  if (score < 40) return emotions.find(e => e.name === "Tired")!;
+  if (score < 44) return emotions.find(e => e.name === "Bored")!;
+  if (score < 48) return emotions.find(e => e.name === "Calm")!;
+  if (score < 52) return emotions.find(e => e.name === "Content")!;
+  if (score < 56) return emotions.find(e => e.name === "Peaceful")!;
+  if (score < 60) return emotions.find(e => e.name === "Relaxed")!;
+  if (score < 64) return emotions.find(e => e.name === "Grateful")!;
+  if (score < 68) return emotions.find(e => e.name === "Hopeful")!;
+  if (score < 72) return emotions.find(e => e.name === "Happy")!;
+  if (score < 76) return emotions.find(e => e.name === "Confident")!;
+  if (score < 80) return emotions.find(e => e.name === "Optimistic")!;
+  if (score < 84) return emotions.find(e => e.name === "Joyful")!;
+  if (score < 88) return emotions.find(e => e.name === "Loved")!;
+  if (score < 92) return emotions.find(e => e.name === "Inspired")!;
+  if (score < 96) return emotions.find(e => e.name === "Energized")!;
+  if (score < 100) return emotions.find(e => e.name === "Excited")!;
+  return emotions.find(e => e.name === "Empowered")!;
+};
+
 export const FeelingsCheckCard = () => {
   const [state, setState] = useState<FeelingsState>("collapsed");
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
-  const [showAllEmotions, setShowAllEmotions] = useState(false);
+  const [sliderValue, setSliderValue] = useState<number[]>([50]);
   const [currentTime] = useState(new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }));
+  
+  const currentEmotion = getEmotionFromScore(sliderValue[0]);
 
-  const displayedEmotions = showAllEmotions ? emotions : emotions.slice(0, 4);
+  const handleSliderChange = (value: number[]) => {
+    setSliderValue(value);
+  };
 
-  const handleEmotionSelect = (emotion: Emotion) => {
+  const handleSliderCommit = () => {
+    const emotion = getEmotionFromScore(sliderValue[0]);
     setSelectedEmotion(emotion);
     setState("transition");
     
@@ -146,31 +182,34 @@ export const FeelingsCheckCard = () => {
             </div>
           </div>
 
-          <div className="space-y-3">
-            <div className="flex justify-between text-sm text-brown-700 mb-2">
-              <span>Terrible</span>
-              <span>Wonderful</span>
+          <div className="space-y-4">
+            {/* Current emotion display */}
+            <div className="text-center mb-2">
+              <span className="text-2xl">{currentEmotion.emoji}</span>
+              <p className="text-base font-semibold text-brown-900 mt-1">
+                {currentEmotion.name}
+              </p>
             </div>
 
-            <div className="flex flex-col items-center gap-2">
-              {displayedEmotions.map((emotion) => (
-                <button
-                  key={emotion.name}
-                  onClick={() => handleEmotionSelect(emotion)}
-                  className="w-full min-w-[140px] bg-background border border-peach-400 rounded-[20px] px-6 py-3 text-brown-900 text-[15px] hover:bg-peach-100 hover:border-primary transition-all"
-                >
-                  {emotion.name}
-                </button>
-              ))}
-              {!showAllEmotions && (
-                <button
-                  onClick={() => setShowAllEmotions(true)}
-                  className="w-full min-w-[140px] bg-background border border-peach-400 rounded-[20px] px-6 py-3 text-brown-900 text-[15px] hover:bg-peach-100 hover:border-primary transition-all"
-                >
-                  + Other
-                </button>
-              )}
+            {/* Slider */}
+            <div className="space-y-2">
+              <Slider 
+                value={sliderValue} 
+                onValueChange={handleSliderChange}
+                onValueCommit={handleSliderCommit}
+                max={100} 
+                step={1}
+                className="w-full"
+              />
+              <div className="flex justify-between text-sm text-brown-700">
+                <span>Terrible</span>
+                <span>Wonderful</span>
+              </div>
             </div>
+
+            <p className="text-xs text-brown-700 text-center mt-4">
+              Drag the slider and release to log your feeling
+            </p>
           </div>
         </div>
       </div>

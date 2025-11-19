@@ -189,13 +189,13 @@ export const FeelingsCheckCard = () => {
   // Get emotions for current slider range
   const getEmotionsForRange = (score: number): Emotion[] => {
     if (score < 25) {
-      return emotions.filter(e => e.type === "challenging").slice(0, 6);
+      return emotions.filter(e => e.type === "challenging").slice(0, 4);
     } else if (score < 50) {
-      return emotions.filter(e => e.type === "neutral").slice(0, 6);
+      return emotions.filter(e => e.type === "neutral").slice(0, 4);
     } else if (score < 75) {
-      return emotions.filter(e => e.type === "positive").slice(0, 6);
+      return emotions.filter(e => e.type === "positive").slice(0, 4);
     } else {
-      return emotions.filter(e => e.type === "positive").slice(6, 12);
+      return emotions.filter(e => e.type === "positive").slice(6, 10);
     }
   };
 
@@ -247,7 +247,7 @@ export const FeelingsCheckCard = () => {
             </div>
 
             {/* Emotion selection buttons */}
-            <div className="grid grid-cols-2 gap-2 mt-4">
+            <div className="flex flex-col gap-2 mt-4">
               {availableEmotions.map((emotion) => (
                 <button
                   key={emotion.name}

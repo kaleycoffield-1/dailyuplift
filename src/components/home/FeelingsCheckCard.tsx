@@ -186,8 +186,32 @@ export const FeelingsCheckCard = () => {
     );
   }
 
+  // Get emotions for current slider range
+  const getEmotionsForRange = (score: number): Emotion[] => {
+    if (score < 25) {
+      return emotions.filter(e => e.type === "challenging").slice(0, 6);
+    } else if (score < 50) {
+      return emotions.filter(e => e.type === "neutral").slice(0, 6);
+    } else if (score < 75) {
+      return emotions.filter(e => e.type === "positive").slice(0, 6);
+    } else {
+      return emotions.filter(e => e.type === "positive").slice(6, 12);
+    }
+  };
+
+  const handleEmotionSelect = (emotion: Emotion) => {
+    setSelectedEmotion(emotion);
+    setState("transition");
+    
+    setTimeout(() => {
+      setState("complete");
+    }, 300);
+  };
+
   // STATE 2: EXPANDED
   if (state === "expanded") {
+    const availableEmotions = getEmotionsForRange(sliderValue[0]);
+    
     return (
       <div ref={cardRef}>
         <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
@@ -206,13 +230,6 @@ export const FeelingsCheckCard = () => {
           </div>
 
           <div className="space-y-4">
-            {/* Current emotion display */}
-            <div className="text-center mb-2">
-              <p className="text-lg font-semibold text-brown-900">
-                {currentEmotion.name}
-              </p>
-            </div>
-
             {/* Slider */}
             <div className="space-y-2">
               <CenterSlider 
@@ -229,11 +246,23 @@ export const FeelingsCheckCard = () => {
               </div>
             </div>
 
+            {/* Emotion selection buttons */}
+            <div className="grid grid-cols-2 gap-2 mt-4">
+              {availableEmotions.map((emotion) => (
+                <button
+                  key={emotion.name}
+                  onClick={() => handleEmotionSelect(emotion)}
+                  className="bg-background border border-border rounded-full px-4 py-2 text-sm text-brown-900 hover:bg-peach-400 transition-colors"
+                >
+                  {emotion.name}
+                </button>
+              ))}
+            </div>
+
             <button
-              onClick={handleSliderCommit}
-              className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold text-base px-6 py-3 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all mt-4"
+              className="w-full bg-transparent border border-border rounded-full px-4 py-2 text-sm text-brown-700 hover:bg-peach-400 transition-colors mt-2"
             >
-              Log this feeling
+              + Other
             </button>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,7 +12,78 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, type = "daily" } = await req.json();
+    // Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Missing authorization header' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      { global: { headers: { Authorization: authHeader } } }
+    );
+
+    const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
+    
+    if (userError || !user) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Parse and validate input
+    const requestBody = await req.json();
+    const { messages, type = "daily" } = requestBody;
+    
+    // Validate messages array
+    if (!Array.isArray(messages)) {
+      return new Response(
+        JSON.stringify({ error: 'Messages must be an array' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    
+    if (messages.length === 0) {
+      return new Response(
+        JSON.stringify({ error: 'Messages array cannot be empty' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    
+    // Validate each message structure
+    for (const msg of messages) {
+      if (!msg.role || !msg.content) {
+        return new Response(
+          JSON.stringify({ error: 'Each message must have role and content' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      if (typeof msg.content !== 'string' || msg.content.trim().length === 0) {
+        return new Response(
+          JSON.stringify({ error: 'Message content must be a non-empty string' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      if (msg.content.length > 10000) {
+        return new Response(
+          JSON.stringify({ error: 'Message content exceeds maximum length of 10000 characters' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+    }
+    
+    // Validate type
+    if (type !== 'daily' && type !== 'rewire') {
+      return new Response(
+        JSON.stringify({ error: 'Type must be either "daily" or "rewire"' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
     const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY');
     
     if (!ANTHROPIC_API_KEY) {

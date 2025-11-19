@@ -129,7 +129,7 @@ const Index = () => {
       </header>
 
       {/* Main Content - Scrollable and Centered */}
-      <main className="flex-1 overflow-y-auto px-4 pt-14 pb-[104px] flex items-center justify-center">
+      <main className="flex-1 overflow-y-auto px-4 pt-14 flex items-center justify-center">
         <div className="space-y-4 max-w-md mx-auto">
           {/* MORNING STATE */}
           {timeOfDay === "morning" && (

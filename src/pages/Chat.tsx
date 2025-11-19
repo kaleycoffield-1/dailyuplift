@@ -20,14 +20,8 @@ const Chat = () => {
   const { toast } = useToast();
   const { sendMessage: streamChat, isLoading } = useStreamingChat({ type: 'daily' });
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      role: "assistant",
-      content: "Good morning! What is your intention for today?",
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [hasLoadedInitialGreeting, setHasLoadedInitialGreeting] = useState(false);
 
   // Auto-scroll to bottom when messages change
   const scrollToBottom = () => {
@@ -37,6 +31,65 @@ const Chat = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Load initial greeting based on time of day
+  useEffect(() => {
+    if (hasLoadedInitialGreeting) return;
+
+    const loadInitialGreeting = async () => {
+      const hour = new Date().getHours();
+      const timeOfDay = hour >= 17 ? "evening" : "morning";
+      
+      const aiMessageId = Date.now().toString();
+      const aiMessage: Message = {
+        id: aiMessageId,
+        role: "assistant",
+        content: "",
+        timestamp: new Date(),
+      };
+      setMessages([aiMessage]);
+
+      try {
+        const contextMessage: Message = {
+          id: "context",
+          role: "user",
+          content: `[SYSTEM: It is currently ${timeOfDay}. Greet the user appropriately for the time of day and begin the ${timeOfDay} check-in flow.]`,
+          timestamp: new Date(),
+        };
+
+        await streamChat(
+          [contextMessage],
+          (chunk) => {
+            setMessages((prev) =>
+              prev.map((msg) =>
+                msg.id === aiMessageId
+                  ? { ...msg, content: msg.content + chunk }
+                  : msg
+              )
+            );
+          },
+          () => {
+            console.log('Initial greeting loaded');
+          }
+        );
+      } catch (error) {
+        console.error('Failed to load initial greeting:', error);
+        // Fallback to default greeting
+        setMessages([{
+          id: aiMessageId,
+          role: "assistant",
+          content: hour >= 17 
+            ? "Good evening! Let me guide you through your evening reflection."
+            : "Good morning! What is your intention for today?",
+          timestamp: new Date(),
+        }]);
+      }
+      
+      setHasLoadedInitialGreeting(true);
+    };
+
+    loadInitialGreeting();
+  }, [hasLoadedInitialGreeting, streamChat]);
 
   const handleTabChange = (tab: "daily" | "rewire") => {
     if (tab === "rewire") {

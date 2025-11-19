@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 
@@ -99,8 +99,31 @@ export const FeelingsCheckCard = () => {
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
   const [sliderValue, setSliderValue] = useState<number[]>([50]);
   const [currentTime] = useState(new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }));
+  const cardRef = useRef<HTMLDivElement>(null);
   
   const currentEmotion = getEmotionFromScore(sliderValue[0]);
+
+  // Lock scroll position when expanded
+  useEffect(() => {
+    if (state === "expanded") {
+      // Scroll card into view smoothly and lock position
+      cardRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      
+      // Prevent body scroll
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      
+      return () => {
+        // Restore body scroll
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [state]);
 
   const handleSliderChange = (value: number[]) => {
     setSliderValue(value);
@@ -129,7 +152,7 @@ export const FeelingsCheckCard = () => {
   // STATE 1: COLLAPSED
   if (state === "collapsed") {
     return (
-      <div>
+      <div ref={cardRef}>
         <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
           FEELINGS CHECK
         </h3>
@@ -166,7 +189,7 @@ export const FeelingsCheckCard = () => {
   // STATE 2: EXPANDED
   if (state === "expanded") {
     return (
-      <div>
+      <div ref={cardRef}>
         <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
           FEELINGS CHECK
         </h3>
@@ -219,7 +242,7 @@ export const FeelingsCheckCard = () => {
   // STATE 3: TRANSITION
   if (state === "transition" && selectedEmotion) {
     return (
-      <div>
+      <div ref={cardRef}>
         <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
           FEELINGS CHECK
         </h3>
@@ -250,7 +273,7 @@ export const FeelingsCheckCard = () => {
   // STATE 4: COMPLETE
   if (state === "complete" && selectedEmotion) {
     return (
-      <div>
+      <div ref={cardRef}>
         <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
           FEELINGS CHECK
         </h3>

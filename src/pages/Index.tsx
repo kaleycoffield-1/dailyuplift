@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { Menu, User, LogOut } from "lucide-react";
+import { Menu, User } from "lucide-react";
 import { DailyWisdomCard } from "@/components/home/DailyWisdomCard";
 import { FeelingsCheckCard } from "@/components/home/FeelingsCheckCard";
 import { RadialAppreciationCard } from "@/components/home/RadialAppreciationCard";
@@ -9,17 +9,11 @@ import { AffirmationCard } from "@/components/home/AffirmationCard";
 import { BottomNav } from "@/components/home/BottomNav";
 import { useGenerateContent } from "@/hooks/useGenerateContent";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 type TimeOfDay = "morning" | "midday" | "evening";
 
 const Index = () => {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const { generateContent, isGenerating } = useGenerateContent();
   const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>("morning");
@@ -78,7 +72,7 @@ const Index = () => {
           setAffirmation(data.text);
         } else {
           // Generate new affirmation if none exists
-          const newAffirmation = await generateContent('affirmation');
+          const newAffirmation = await generateContent('affirmation', user.id);
           if (newAffirmation) {
             setAffirmation(newAffirmation.text);
           }
@@ -129,23 +123,9 @@ const Index = () => {
         <button className="p-2 hover:scale-110 transition-transform">
           <Menu className="w-6 h-6 text-brown-900" />
         </button>
-        
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="p-2 hover:scale-110 transition-transform">
-              <User className="w-6 h-6 text-brown-900" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48 bg-background border-peach-400">
-            <DropdownMenuItem 
-              onClick={signOut}
-              className="cursor-pointer text-brown-900 focus:bg-peach-200 focus:text-brown-900"
-            >
-              <LogOut className="mr-2 h-4 w-4" />
-              <span>Log out</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <button className="p-2 hover:scale-110 transition-transform">
+          <User className="w-6 h-6 text-brown-900" />
+        </button>
       </header>
 
       {/* Main Content - Scrollable */}
@@ -161,10 +141,7 @@ const Index = () => {
                 </h1>
                 
                 {/* Primary Button */}
-                <button 
-                  onClick={() => navigate('/chat')}
-                  className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold text-base px-8 py-3.5 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[48px] mb-20"
-                >
+                <button className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold text-base px-8 py-3.5 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[48px] mb-20">
                   Begin morning check-in
                 </button>
               </div>

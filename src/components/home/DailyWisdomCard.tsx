@@ -8,15 +8,12 @@ interface DailyWisdomCardProps {
 }
 
 export const DailyWisdomCard = ({ title, content, onDeeper, onBookmark }: DailyWisdomCardProps) => {
-  // Strip any markdown formatting from title
-  const cleanTitle = title.replace(/[*_~`#]/g, '').trim();
-  
   return (
     <div className="bg-peach-300 rounded-[20px] p-6 relative min-h-[300px] border-2 border-border flex flex-col">
       {/* Header with Title and Bookmark */}
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-xs font-normal uppercase tracking-wide text-brown-700">
-          {cleanTitle}
+          {title}
         </h2>
         <button 
           onClick={onBookmark}

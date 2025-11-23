@@ -1,13 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -20,7 +13,6 @@ export default function Settings() {
   
   // Change password modal
   const [showPasswordModal, setShowPasswordModal] = useState(false);
-  const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   
@@ -92,7 +84,6 @@ export default function Settings() {
 
       toast.success("Password updated successfully");
       setShowPasswordModal(false);
-      setOldPassword("");
       setNewPassword("");
       setConfirmPassword("");
     } catch (error) {
@@ -105,7 +96,6 @@ export default function Settings() {
   const handleSaveNotificationTimes = async () => {
     if (!user) return;
     
-    // Validate notification times
     const timeSchema = z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format (HH:MM)");
     
     try {
@@ -170,206 +160,239 @@ export default function Settings() {
   return (
     <div className="min-h-screen bg-background p-4 md:p-8">
       <div className="max-w-2xl mx-auto space-y-6">
-        <Button
-          variant="ghost"
+        <button
           onClick={() => navigate("/")}
-          className="mb-4"
+          className="flex items-center gap-2 text-brown-900 hover:text-primary transition-colors mb-4"
         >
-          <ArrowLeft className="h-4 w-4 mr-2" />
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
 
-        <h1 className="text-3xl font-bold text-foreground">Settings</h1>
+        <h1 className="text-3xl font-bold text-brown-900">Settings</h1>
 
         {/* Account Information */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Account Information</CardTitle>
-            <CardDescription>Your account details</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
+        <div className="bg-surface border border-border rounded-xl p-6">
+          <h2 className="text-xl font-semibold text-brown-900 mb-2">Account Information</h2>
+          <p className="text-sm text-brown-700 mb-4">Your account details</p>
+          
+          <div className="space-y-4">
             <div>
-              <Label>Email</Label>
-              <p className="text-foreground mt-1">{user?.email}</p>
+              <label className="block text-sm font-medium text-brown-900 mb-1">Email</label>
+              <p className="text-brown-900">{user?.email}</p>
             </div>
-            <Button onClick={() => setShowPasswordModal(true)}>
+            <button
+              onClick={() => setShowPasswordModal(true)}
+              className="px-6 py-2 bg-primary text-brown-900 font-semibold rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all"
+            >
               Change Password
-            </Button>
-          </CardContent>
-        </Card>
+            </button>
+          </div>
+        </div>
 
         {/* Notification Settings */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Notification Times</CardTitle>
-            <CardDescription>Set when you'd like to receive daily reminders</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-4">
+        <div className="bg-surface border border-border rounded-xl p-6">
+          <h2 className="text-xl font-semibold text-brown-900 mb-2">Notification Times</h2>
+          <p className="text-sm text-brown-700 mb-4">Set when you'd like to receive daily reminders</p>
+          
+          <div className="space-y-6">
+            {/* Morning */}
+            <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <Label htmlFor="morning-enabled">Morning Check-in</Label>
-                  <p className="text-sm text-muted-foreground">Daily morning reminder</p>
+                <div>
+                  <label className="block text-sm font-medium text-brown-900">Morning Check-in</label>
+                  <p className="text-sm text-brown-700">Daily morning reminder</p>
                 </div>
-                <Switch
-                  id="morning-enabled"
-                  checked={morningEnabled}
-                  onCheckedChange={setMorningEnabled}
-                />
+                <button
+                  onClick={() => setMorningEnabled(!morningEnabled)}
+                  className={`w-12 h-6 rounded-full transition-colors ${
+                    morningEnabled ? "bg-primary" : "bg-border"
+                  }`}
+                >
+                  <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
+                    morningEnabled ? "translate-x-6" : "translate-x-1"
+                  }`} />
+                </button>
               </div>
               {morningEnabled && (
-                <Input
+                <input
                   type="time"
                   value={morningTime}
                   onChange={(e) => setMorningTime(e.target.value)}
-                  className="ml-0"
+                  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-brown-900 focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               )}
             </div>
 
-            <div className="space-y-4">
+            {/* Afternoon */}
+            <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <Label htmlFor="afternoon-enabled">Afternoon Feelings Check</Label>
-                  <p className="text-sm text-muted-foreground">Mid-day check-in</p>
+                <div>
+                  <label className="block text-sm font-medium text-brown-900">Afternoon Feelings Check</label>
+                  <p className="text-sm text-brown-700">Mid-day check-in</p>
                 </div>
-                <Switch
-                  id="afternoon-enabled"
-                  checked={afternoonEnabled}
-                  onCheckedChange={setAfternoonEnabled}
-                />
+                <button
+                  onClick={() => setAfternoonEnabled(!afternoonEnabled)}
+                  className={`w-12 h-6 rounded-full transition-colors ${
+                    afternoonEnabled ? "bg-primary" : "bg-border"
+                  }`}
+                >
+                  <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
+                    afternoonEnabled ? "translate-x-6" : "translate-x-1"
+                  }`} />
+                </button>
               </div>
               {afternoonEnabled && (
-                <Input
+                <input
                   type="time"
                   value={afternoonTime}
                   onChange={(e) => setAfternoonTime(e.target.value)}
-                  className="ml-0"
+                  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-brown-900 focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               )}
             </div>
 
-            <div className="space-y-4">
+            {/* Evening */}
+            <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <Label htmlFor="evening-enabled">Evening Reflection</Label>
-                  <p className="text-sm text-muted-foreground">End of day reflection</p>
+                <div>
+                  <label className="block text-sm font-medium text-brown-900">Evening Reflection</label>
+                  <p className="text-sm text-brown-700">End of day reflection</p>
                 </div>
-                <Switch
-                  id="evening-enabled"
-                  checked={eveningEnabled}
-                  onCheckedChange={setEveningEnabled}
-                />
+                <button
+                  onClick={() => setEveningEnabled(!eveningEnabled)}
+                  className={`w-12 h-6 rounded-full transition-colors ${
+                    eveningEnabled ? "bg-primary" : "bg-border"
+                  }`}
+                >
+                  <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
+                    eveningEnabled ? "translate-x-6" : "translate-x-1"
+                  }`} />
+                </button>
               </div>
               {eveningEnabled && (
-                <Input
+                <input
                   type="time"
                   value={eveningTime}
                   onChange={(e) => setEveningTime(e.target.value)}
-                  className="ml-0"
+                  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-brown-900 focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               )}
             </div>
 
-            <Button onClick={handleSaveNotificationTimes} disabled={savingTimes} className="w-full">
+            <button
+              onClick={handleSaveNotificationTimes}
+              disabled={savingTimes}
+              className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold py-3 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               {savingTimes ? "Saving..." : "Save Notification Settings"}
-            </Button>
-          </CardContent>
-        </Card>
+            </button>
+          </div>
+        </div>
 
         {/* Account Actions */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Account Actions</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Button variant="outline" onClick={signOut} className="w-full">
+        <div className="bg-surface border border-border rounded-xl p-6">
+          <h2 className="text-xl font-semibold text-brown-900 mb-4">Account Actions</h2>
+          
+          <div className="space-y-3">
+            <button
+              onClick={signOut}
+              className="w-full px-6 py-3 bg-background border border-border text-brown-900 font-semibold rounded-full hover:bg-surface transition-all"
+            >
               Log Out
-            </Button>
-            <Button 
-              variant="destructive" 
+            </button>
+            <button
               onClick={() => setShowDeleteModal(true)}
-              className="w-full"
+              className="w-full px-6 py-3 bg-red-500 text-white font-semibold rounded-full hover:bg-red-600 transition-all"
             >
               Delete Account
-            </Button>
-          </CardContent>
-        </Card>
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Change Password Modal */}
-      <Dialog open={showPasswordModal} onOpenChange={setShowPasswordModal}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Change Password</DialogTitle>
-            <DialogDescription>
-              Enter your new password below
-            </DialogDescription>
-          </DialogHeader>
-          <form onSubmit={handleChangePassword}>
-            <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <Label htmlFor="new-password">New Password</Label>
-                <Input
-                  id="new-password"
+      {showPasswordModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-background rounded-xl p-6 max-w-md w-full">
+            <h2 className="text-xl font-semibold text-brown-900 mb-2">Change Password</h2>
+            <p className="text-sm text-brown-700 mb-4">Enter your new password below</p>
+            
+            <form onSubmit={handleChangePassword} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-brown-900 mb-2">New Password</label>
+                <input
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
+                  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-brown-900 focus:outline-none focus:ring-2 focus:ring-primary"
                   required
                   disabled={loading}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="confirm-password">Confirm New Password</Label>
-                <Input
-                  id="confirm-password"
+              
+              <div>
+                <label className="block text-sm font-medium text-brown-900 mb-2">Confirm New Password</label>
+                <input
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-brown-900 focus:outline-none focus:ring-2 focus:ring-primary"
                   required
                   disabled={loading}
                 />
               </div>
-            </div>
-            <DialogFooter>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setShowPasswordModal(false)}
-                disabled={loading}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" disabled={loading}>
-                {loading ? "Updating..." : "Update Password"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
 
-      {/* Delete Account Confirmation */}
-      <AlertDialog open={showDeleteModal} onOpenChange={setShowDeleteModal}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => setShowPasswordModal(false)}
+                  disabled={loading}
+                  className="flex-1 px-6 py-3 bg-background border border-border text-brown-900 font-semibold rounded-full hover:bg-surface transition-all disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
+                >
+                  {loading ? "Updating..." : "Update Password"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Account Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-background rounded-xl p-6 max-w-md w-full">
+            <h2 className="text-xl font-semibold text-brown-900 mb-2">Are you absolutely sure?</h2>
+            <p className="text-sm text-brown-700 mb-6">
               This action cannot be undone. This will permanently delete your account
               and remove all your data from our servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDeleteAccount}
-              disabled={loading}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-            >
-              {loading ? "Deleting..." : "Delete Account"}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+            </p>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                disabled={loading}
+                className="flex-1 px-6 py-3 bg-background border border-border text-brown-900 font-semibold rounded-full hover:bg-surface transition-all disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteAccount}
+                disabled={loading}
+                className="flex-1 px-6 py-3 bg-red-500 text-white font-semibold rounded-full hover:bg-red-600 transition-all disabled:opacity-50"
+              >
+                {loading ? "Deleting..." : "Delete Account"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

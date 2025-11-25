@@ -6,7 +6,6 @@ import { ChatTabs } from "@/components/chat/ChatTabs";
 import { ChatMessage } from "@/components/chat/ChatMessage";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { useStreamingChat } from "@/hooks/useStreamingChat";
-import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 type Message = {
@@ -18,7 +17,6 @@ type Message = {
 
 const Chat = () => {
   const navigate = useNavigate();
-  const { toast } = useToast();
   const { sendMessage: streamChat, isLoading } = useStreamingChat({ type: 'daily' });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -81,11 +79,6 @@ const Chat = () => {
       }
     } catch (error) {
       console.error('Error loading conversation:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load conversation history",
-        variant: "destructive",
-      });
     } finally {
       setIsLoadingHistory(false);
     }
@@ -196,11 +189,7 @@ const Chat = () => {
         }
       );
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to get response. Please try again.",
-        variant: "destructive",
-      });
+      console.error('Failed to get response:', error);
       // Remove the failed message
       setMessages((prev) => prev.filter((msg) => msg.id !== aiMessageId));
     }

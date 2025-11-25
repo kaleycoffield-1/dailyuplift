@@ -117,9 +117,9 @@ const Index = () => {
   };
 
   return (
-    <div className="h-screen bg-background flex flex-col overflow-hidden">
-      {/* Header Bar - Fixed */}
-      <header className="h-14 px-4 flex items-center justify-between flex-shrink-0">
+    <div className="min-h-screen bg-background pb-[120px]">
+      {/* Header Bar */}
+      <header className="h-14 px-4 flex items-center justify-between">
         <button className="p-2 hover:scale-110 transition-transform">
           <Menu className="w-6 h-6 text-brown-900" />
         </button>
@@ -128,8 +128,8 @@ const Index = () => {
         </button>
       </header>
 
-      {/* Main Content - Scrollable */}
-      <main className="flex-1 overflow-y-auto px-4 pb-6">
+      {/* Main Content */}
+      <main className="px-4">
         <div className="space-y-4 max-w-md mx-auto">
           {/* MORNING STATE */}
           {timeOfDay === "morning" && (
@@ -156,7 +156,15 @@ const Index = () => {
                     content={dailyWisdom.content}
                   />
                 </div>
-                <FeelingsCheckCard />
+                <div>
+                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                    FEELINGS CHECK
+                  </p>
+                  <FeelingsCheckCard 
+                    feeling={currentFeeling}
+                    timestamp={getCurrentTime()}
+                  />
+                </div>
                 <div>
                   <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
                     LIFT YOUR VIBE EXERCISE
@@ -176,7 +184,15 @@ const Index = () => {
               </h1>
               
               <div className="space-y-10">
-                <FeelingsCheckCard />
+                <div>
+                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                    FEELINGS CHECK
+                  </p>
+                  <FeelingsCheckCard 
+                    feeling={currentFeeling}
+                    timestamp={getCurrentTime()}
+                  />
+                </div>
                 <div>
                   <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
                     LIFT YOUR VIBE EXERCISE
@@ -236,7 +252,15 @@ const Index = () => {
                     content={dailyWisdom.content}
                   />
                 </div>
-                <FeelingsCheckCard />
+                <div>
+                  <p className="text-xs font-normal uppercase tracking-wide text-brown-700 text-center mb-3">
+                    FEELINGS CHECK
+                  </p>
+                  <FeelingsCheckCard 
+                    feeling={currentFeeling}
+                    timestamp={getCurrentTime()}
+                  />
+                </div>
               </div>
             </>
           )}

@@ -62,12 +62,7 @@ serve(async (req) => {
     if (type === 'wisdom') {
       // Parse title and content from the response
       const lines = content.split('\n').filter((line: string) => line.trim());
-      const title = lines[0]
-        .replace(/^(Title:|#)\s*/i, '')
-        .replace(/\*\*/g, '')  // Remove bold markdown
-        .replace(/\*/g, '')     // Remove italic markdown
-        .replace(/_/g, '')      // Remove underscores
-        .trim();
+      const title = lines[0].replace(/^(Title:|#)\s*/i, '').trim();
       const bodyContent = lines.slice(1).join(' ').trim();
 
       const { data: wisdom, error } = await supabase

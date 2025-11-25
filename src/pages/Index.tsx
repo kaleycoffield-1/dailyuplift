@@ -119,7 +119,7 @@ const Index = () => {
   return (
     <div className="h-screen bg-background flex flex-col overflow-hidden">
       {/* Header Bar - Fixed */}
-      <header className="h-14 px-4 flex items-center justify-between flex-shrink-0 fixed top-0 left-0 right-0 bg-background z-10">
+      <header className="h-14 px-4 flex items-center justify-between flex-shrink-0">
         <button className="p-2 hover:scale-110 transition-transform">
           <Menu className="w-6 h-6 text-brown-900" />
         </button>
@@ -129,8 +129,8 @@ const Index = () => {
       </header>
 
       {/* Main Content - Scrollable */}
-      <main className="flex-1 overflow-y-auto px-4 pt-14">
-        <div className="space-y-4 max-w-md mx-auto min-h-full pb-6">
+      <main className="flex-1 overflow-y-auto px-4 pb-6">
+        <div className="space-y-4 max-w-md mx-auto">
           {/* MORNING STATE */}
           {timeOfDay === "morning" && (
             <>
@@ -236,9 +236,7 @@ const Index = () => {
                     content={dailyWisdom.content}
                   />
                 </div>
-                <div className="pb-28">
-                  <FeelingsCheckCard />
-                </div>
+                <FeelingsCheckCard />
               </div>
             </>
           )}

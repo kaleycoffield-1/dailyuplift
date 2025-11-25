@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -14,12 +19,12 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [showMagicLink, setShowMagicLink] = useState(false);
-  const { user } = useAuth();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
+  // Redirect if already logged in
   useEffect(() => {
     if (user) {
       navigate("/");
@@ -190,217 +195,173 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <div className="bg-surface border border-border rounded-xl p-6">
-          <h1 className="text-2xl font-bold text-brown-900 text-center mb-2">Welcome</h1>
-          <p className="text-sm text-brown-700 text-center mb-6">Sign in to your account or create a new one</p>
-
-          {/* Tabs */}
-          <div className="flex gap-2 mb-6">
-            <button
-              onClick={() => {
-                setActiveTab("login");
-                setShowForgotPassword(false);
-                setShowMagicLink(false);
-              }}
-              className={`flex-1 py-2 px-4 rounded-lg font-semibold transition-all ${
-                activeTab === "login"
-                  ? "bg-primary text-brown-900"
-                  : "bg-transparent text-brown-700 hover:bg-background"
-              }`}
-            >
-              Login
-            </button>
-            <button
-              onClick={() => {
-                setActiveTab("signup");
-                setShowForgotPassword(false);
-                setShowMagicLink(false);
-              }}
-              className={`flex-1 py-2 px-4 rounded-lg font-semibold transition-all ${
-                activeTab === "signup"
-                  ? "bg-primary text-brown-900"
-                  : "bg-transparent text-brown-700 hover:bg-background"
-              }`}
-            >
-              Sign Up
-            </button>
-          </div>
-
-          {/* Login Tab */}
-          {activeTab === "login" && (
-            <>
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-muted/20 p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold text-center">Welcome</CardTitle>
+          <CardDescription className="text-center">
+            Sign in to your account or create a new one
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="login" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="login">Login</TabsTrigger>
+              <TabsTrigger value="signup">Sign Up</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="login">
               {showForgotPassword ? (
                 <form onSubmit={handleForgotPassword} className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-brown-900 mb-2">Email</label>
-                    <input
+                  <div className="space-y-2">
+                    <Label htmlFor="reset-email">Email</Label>
+                    <Input
+                      id="reset-email"
                       type="email"
+                      placeholder="your@email.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-3 bg-background border border-border rounded-xl text-brown-900 focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="your@email.com"
-                      disabled={loading}
                       required
+                      disabled={loading}
                     />
                   </div>
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold py-3 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
-                  >
+                  <Button type="submit" className="w-full" disabled={loading}>
                     {loading ? "Sending..." : "Send Reset Link"}
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
+                    variant="ghost"
+                    className="w-full"
                     onClick={() => setShowForgotPassword(false)}
                     disabled={loading}
-                    className="w-full text-brown-700 text-sm hover:underline disabled:opacity-50"
                   >
                     Back to Login
-                  </button>
+                  </Button>
                 </form>
               ) : showMagicLink ? (
                 <form onSubmit={handleMagicLink} className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-brown-900 mb-2">Email</label>
-                    <input
+                  <div className="space-y-2">
+                    <Label htmlFor="magic-email">Email</Label>
+                    <Input
+                      id="magic-email"
                       type="email"
+                      placeholder="your@email.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-3 bg-background border border-border rounded-xl text-brown-900 focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="your@email.com"
-                      disabled={loading}
                       required
+                      disabled={loading}
                     />
                   </div>
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold py-3 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
-                  >
+                  <Button type="submit" className="w-full" disabled={loading}>
                     {loading ? "Sending magic link..." : "Send Magic Link"}
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
+                    variant="ghost"
+                    className="w-full"
                     onClick={() => setShowMagicLink(false)}
                     disabled={loading}
-                    className="w-full text-brown-700 text-sm hover:underline disabled:opacity-50"
                   >
                     Back to Login
-                  </button>
+                  </Button>
                 </form>
               ) : (
                 <form onSubmit={handleLogin} className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-brown-900 mb-2">Email</label>
-                    <input
+                  <div className="space-y-2">
+                    <Label htmlFor="login-email">Email</Label>
+                    <Input
+                      id="login-email"
                       type="email"
+                      placeholder="your@email.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-3 bg-background border border-border rounded-xl text-brown-900 focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="your@email.com"
-                      disabled={loading}
                       required
+                      disabled={loading}
                     />
                   </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-brown-900 mb-2">Password</label>
-                    <input
+                  <div className="space-y-2">
+                    <Label htmlFor="login-password">Password</Label>
+                    <Input
+                      id="login-password"
                       type="password"
+                      placeholder="••••••••"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full px-4 py-3 bg-background border border-border rounded-xl text-brown-900 focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="••••••••"
-                      disabled={loading}
                       required
+                      disabled={loading}
                     />
                   </div>
-
-                  <div className="flex justify-between items-center text-sm">
-                    <button
+                  <div className="flex justify-between items-center">
+                    <Button
                       type="button"
+                      variant="link"
+                      className="px-0 text-sm"
                       onClick={() => setShowMagicLink(true)}
-                      className="text-brown-700 hover:underline"
                     >
                       Send me a magic link
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       type="button"
+                      variant="link"
+                      className="px-0 text-sm"
                       onClick={() => setShowForgotPassword(true)}
-                      className="text-brown-700 hover:underline"
                     >
                       Forgot password?
-                    </button>
+                    </Button>
                   </div>
-
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold py-3 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
-                  >
+                  <Button type="submit" className="w-full" disabled={loading}>
                     {loading ? "Signing in..." : "Sign In"}
-                  </button>
+                  </Button>
                 </form>
               )}
-            </>
-          )}
-
-          {/* Signup Tab */}
-          {activeTab === "signup" && (
-            <form onSubmit={handleSignup} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-brown-900 mb-2">Name</label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-brown-900 focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder="Your name"
-                  disabled={loading}
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-brown-900 mb-2">Email</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-brown-900 focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder="your@email.com"
-                  disabled={loading}
-                  required
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-brown-900 mb-2">Password</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-brown-900 focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder="••••••••"
-                  disabled={loading}
-                  required
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold py-3 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
-              >
-                {loading ? "Creating account..." : "Create Account"}
-              </button>
-            </form>
-          )}
-        </div>
-      </div>
+            </TabsContent>
+            
+            <TabsContent value="signup">
+              <form onSubmit={handleSignup} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="signup-name">Name</Label>
+                  <Input
+                    id="signup-name"
+                    type="text"
+                    placeholder="Your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    disabled={loading}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="signup-email">Email</Label>
+                  <Input
+                    id="signup-email"
+                    type="email"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    disabled={loading}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="signup-password">Password</Label>
+                  <Input
+                    id="signup-password"
+                    type="password"
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    disabled={loading}
+                  />
+                </div>
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? "Creating account..." : "Create Account"}
+                </Button>
+              </form>
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
     </div>
   );
 };

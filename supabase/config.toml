@@ -1,10 +1,7 @@
 project_id = "skmfggeirhuanrdiepha"
 
 [functions.chat]
-verify_jwt = true
-
-[functions.delete-user]
-verify_jwt = true
+verify_jwt = false
 
 [functions.generate-content]
 verify_jwt = false

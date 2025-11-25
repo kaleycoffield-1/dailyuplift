@@ -5,6 +5,7 @@ import { ChatTabs } from "@/components/chat/ChatTabs";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { BottomNav } from "@/components/home/BottomNav";
 import { useStreamingChat } from "@/hooks/useStreamingChat";
+import { useToast } from "@/hooks/use-toast";
 
 type Message = {
   id: string;
@@ -15,6 +16,7 @@ type Message = {
 
 export const RewireNew = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const { sendMessage: streamChat, isLoading } = useStreamingChat({ type: 'rewire' });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<Message[]>([
@@ -84,7 +86,11 @@ export const RewireNew = () => {
         }
       );
     } catch (error) {
-      console.error('Failed to get response:', error);
+      toast({
+        title: "Error",
+        description: "Failed to get response. Please try again.",
+        variant: "destructive",
+      });
       setMessages((prev) => prev.filter((msg) => msg.id !== aiMessageId));
     }
   };

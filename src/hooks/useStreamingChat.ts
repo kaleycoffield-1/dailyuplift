@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 
 type Message = {
   id: string;
@@ -25,27 +24,12 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
     setIsLoading(true);
     
     try {
-      // Get the user's session token
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-
-      if (sessionError || !session) {
-        const error = new Error('Not authenticated. Please log in.');
-        if (onError) {
-          onError(error);
-        }
-        setIsLoading(false);
-        return;
-      }
-
-      const authToken = session.access_token;
-
       const response = await fetch(
         'https://skmfggeirhuanrdiepha.supabase.co/functions/v1/chat',
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${authToken}`,
           },
           body: JSON.stringify({
             messages: messages.map(m => ({
@@ -58,9 +42,7 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
       );
 
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('API Error:', response.status, errorText);
-        throw new Error(`API error: ${response.status} - ${errorText}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const reader = response.body?.getReader();

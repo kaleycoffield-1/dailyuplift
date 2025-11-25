@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -13,6 +17,7 @@ const ResetPassword = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Check if we have a valid session from the reset link
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session) {
         toast.error("Invalid or expired reset link");
@@ -59,49 +64,46 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <div className="bg-surface border border-border rounded-xl p-6">
-          <h1 className="text-2xl font-bold text-brown-900 text-center mb-2">Reset Password</h1>
-          <p className="text-sm text-brown-700 text-center mb-6">Enter your new password below</p>
-
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-muted/20 p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold text-center">Reset Password</CardTitle>
+          <CardDescription className="text-center">
+            Enter your new password below
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
           <form onSubmit={handleResetPassword} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-brown-900 mb-2">New Password</label>
-              <input
+            <div className="space-y-2">
+              <Label htmlFor="password">New Password</Label>
+              <Input
+                id="password"
                 type="password"
+                placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-background border border-border rounded-xl text-brown-900 focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="••••••••"
-                disabled={loading}
                 required
+                disabled={loading}
               />
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-brown-900 mb-2">Confirm Password</label>
-              <input
+            <div className="space-y-2">
+              <Label htmlFor="confirm-password">Confirm Password</Label>
+              <Input
+                id="confirm-password"
                 type="password"
+                placeholder="••••••••"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-background border border-border rounded-xl text-brown-900 focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="••••••••"
-                disabled={loading}
                 required
+                disabled={loading}
               />
             </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-gradient-start to-gradient-end text-brown-900 font-semibold py-3 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            >
+            <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Updating..." : "Update Password"}
-            </button>
+            </Button>
           </form>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

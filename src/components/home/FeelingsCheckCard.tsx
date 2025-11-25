@@ -152,7 +152,7 @@ export const FeelingsCheckCard = () => {
   // STATE 1: COLLAPSED
   if (state === "collapsed") {
     return (
-      <div ref={cardRef} className="pb-6">
+      <div ref={cardRef}>
         <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
           FEELINGS CHECK
         </h3>
@@ -189,13 +189,13 @@ export const FeelingsCheckCard = () => {
   // Get emotions for current slider range
   const getEmotionsForRange = (score: number): Emotion[] => {
     if (score < 25) {
-      return emotions.filter(e => e.type === "challenging").slice(0, 4);
+      return emotions.filter(e => e.type === "challenging").slice(0, 6);
     } else if (score < 50) {
-      return emotions.filter(e => e.type === "neutral").slice(0, 4);
+      return emotions.filter(e => e.type === "neutral").slice(0, 6);
     } else if (score < 75) {
-      return emotions.filter(e => e.type === "positive").slice(0, 4);
+      return emotions.filter(e => e.type === "positive").slice(0, 6);
     } else {
-      return emotions.filter(e => e.type === "positive").slice(6, 10);
+      return emotions.filter(e => e.type === "positive").slice(6, 12);
     }
   };
 
@@ -213,7 +213,7 @@ export const FeelingsCheckCard = () => {
     const availableEmotions = getEmotionsForRange(sliderValue[0]);
     
     return (
-      <div ref={cardRef} className="pb-6">
+      <div ref={cardRef}>
         <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
           FEELINGS CHECK
         </h3>
@@ -247,7 +247,7 @@ export const FeelingsCheckCard = () => {
             </div>
 
             {/* Emotion selection buttons */}
-            <div className="flex flex-col gap-2 mt-4">
+            <div className="grid grid-cols-2 gap-2 mt-4">
               {availableEmotions.map((emotion) => (
                 <button
                   key={emotion.name}
@@ -273,7 +273,7 @@ export const FeelingsCheckCard = () => {
   // STATE 3: TRANSITION
   if (state === "transition" && selectedEmotion) {
     return (
-      <div ref={cardRef} className="pb-6">
+      <div ref={cardRef}>
         <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
           FEELINGS CHECK
         </h3>
@@ -304,7 +304,7 @@ export const FeelingsCheckCard = () => {
   // STATE 4: COMPLETE
   if (state === "complete" && selectedEmotion) {
     return (
-      <div ref={cardRef} className="pb-6">
+      <div ref={cardRef}>
         <h3 className="text-xs font-semibold uppercase tracking-wider text-brown-600 mb-3 px-4">
           FEELINGS CHECK
         </h3>

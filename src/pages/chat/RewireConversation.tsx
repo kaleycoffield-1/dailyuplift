@@ -6,7 +6,6 @@ import { ChatInput } from "@/components/chat/ChatInput";
 import { BottomNav } from "@/components/home/BottomNav";
 import { MessageBubble } from "@/components/chat/MessageBubble";
 import { useStreamingChat } from "@/hooks/useStreamingChat";
-import { useToast } from "@/hooks/use-toast";
 
 // Mock conversation data
 const mockConversationData = {
@@ -56,7 +55,6 @@ export const RewireConversation = () => {
   const { id } = useParams();
   const location = useLocation();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { toast } = useToast();
   const { sendMessage: streamChat, isLoading } = useStreamingChat({ type: 'rewire' });
 
   // Get conversation data from route state or mock data
@@ -113,11 +111,7 @@ export const RewireConversation = () => {
         }
       );
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to get response. Please try again.",
-        variant: "destructive",
-      });
+      console.error('Failed to get response:', error);
       setMessages((prev) => prev.filter((msg) => msg.id !== aiMessageId));
     }
   };

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu, User } from "lucide-react";
 import { BottomNav } from "@/components/home/BottomNav";
@@ -25,12 +25,44 @@ const Chat = () => {
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [isLoadingHistory, setIsLoadingHistory] = useState(true);
 
-  // Load or create conversation on mount
-  useEffect(() => {
-    loadOrCreateConversation();
+  const loadMessages = useCallback(async (convId: string) => {
+    const { data, error } = await supabase
+      .from('chat_messages')
+      .select('*')
+      .eq('conversation_id', convId)
+      .order('created_at', { ascending: true });
+
+    if (error) {
+      console.error('Error loading messages:', error);
+      return;
+    }
+
+    if (data) {
+      const loadedMessages: Message[] = data.map(msg => ({
+        id: msg.id,
+        role: msg.role as "user" | "assistant",
+        content: msg.content,
+        timestamp: new Date(msg.created_at),
+      }));
+      setMessages(loadedMessages);
+    }
   }, []);
 
-  const loadOrCreateConversation = async () => {
+  const saveMessage = useCallback(async (convId: string, message: Message) => {
+    try {
+      await supabase
+        .from('chat_messages')
+        .insert({
+          conversation_id: convId,
+          role: message.role,
+          content: message.content,
+        });
+    } catch (error) {
+      console.error('Error saving message:', error);
+    }
+  }, []);
+
+  const loadOrCreateConversation = useCallback(async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
@@ -89,44 +121,12 @@ const Chat = () => {
     } finally {
       setIsLoadingHistory(false);
     }
-  };
+  }, [toast, loadMessages, saveMessage]);
 
-  const loadMessages = async (convId: string) => {
-    const { data, error } = await supabase
-      .from('chat_messages')
-      .select('*')
-      .eq('conversation_id', convId)
-      .order('created_at', { ascending: true });
-
-    if (error) {
-      console.error('Error loading messages:', error);
-      return;
-    }
-
-    if (data) {
-      const loadedMessages: Message[] = data.map(msg => ({
-        id: msg.id,
-        role: msg.role as "user" | "assistant",
-        content: msg.content,
-        timestamp: new Date(msg.created_at),
-      }));
-      setMessages(loadedMessages);
-    }
-  };
-
-  const saveMessage = async (convId: string, message: Message) => {
-    try {
-      await supabase
-        .from('chat_messages')
-        .insert({
-          conversation_id: convId,
-          role: message.role,
-          content: message.content,
-        });
-    } catch (error) {
-      console.error('Error saving message:', error);
-    }
-  };
+  // Load or create conversation on mount
+  useEffect(() => {
+    loadOrCreateConversation();
+  }, [loadOrCreateConversation]);
 
   // Auto-scroll to bottom when messages change
   const scrollToBottom = () => {

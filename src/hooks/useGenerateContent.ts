@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 type ContentType = 'wisdom' | 'affirmation';
@@ -6,7 +6,7 @@ type ContentType = 'wisdom' | 'affirmation';
 export const useGenerateContent = () => {
   const [isGenerating, setIsGenerating] = useState(false);
 
-  const generateContent = async (type: ContentType, userId?: string) => {
+  const generateContent = useCallback(async (type: ContentType, userId?: string) => {
     setIsGenerating(true);
     
     try {
@@ -22,7 +22,7 @@ export const useGenerateContent = () => {
     } finally {
       setIsGenerating(false);
     }
-  };
+  }, []);
 
   return { generateContent, isGenerating };
 };

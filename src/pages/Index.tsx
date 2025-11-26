@@ -52,7 +52,7 @@ const Index = () => {
     };
 
     fetchWisdom();
-  }, []);
+  }, [generateContent]);
 
   // Fetch or generate affirmation
   useEffect(() => {
@@ -83,7 +83,7 @@ const Index = () => {
     };
 
     fetchAffirmation();
-  }, [user?.id]);
+  }, [user?.id, generateContent]);
   
   // Get current time formatted
   const getCurrentTime = () => {
